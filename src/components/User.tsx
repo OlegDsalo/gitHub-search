@@ -6,8 +6,9 @@ import {axiosGetUser} from "../AsyncThunk/userReducer";
 import {axiosGetUserRepo} from "../AsyncThunk/userRepoReducer";
 import {axiosGetUsersCorectRepo} from "../AsyncThunk/userCurentRepo";
 import './User.css'
-import {UserTypes} from "../types/Users.types";
 
+
+import {UserRepo} from "../../types/Users.interface";
 
 const User = () => {
     let {login}:any = useParams();
@@ -55,7 +56,7 @@ const User = () => {
             )}
             <div className='search-repo'>
                      <input className="search-repos" onChange={handlerRepos} type="text"/>
-                     {userRepo.map((item:UserTypes) => (
+                     {userRepo.map((item:UserRepo) => (
                      <div className='user-repos' key={item.name}>
                          <p><a href={`${item.html_url}`}>{item.name}</a></p>
                          <div>

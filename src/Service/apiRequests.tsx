@@ -2,8 +2,7 @@ import axios from "axios";
 
 export class apiRequests{
     private USER_PER_PAGE: string = '25';
-    private REACT_APP_ACCESS_TOKEN :string='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';
-    headers = {Authorization: `token ${(this.REACT_APP_ACCESS_TOKEN)}`};
+    headers = {Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}`};
     constructor(
         private URL:string = 'https://api.github.com/',
     ) {
@@ -13,7 +12,7 @@ export class apiRequests{
          return await axios.get(`${this.URL}search/users`,{
             headers:this.headers,
             params:{
-                per_page:'USER_PER_PAGE',
+                per_page:5,
                 q: userName || "oleg",
             },
         }).then((response) => response.data)
@@ -24,7 +23,7 @@ export class apiRequests{
         if (users) {
         const res: any = await Promise.all(users.items.map((user: any) => axios.get(user.repos_url, {
             params: {
-                per_page: 100,
+                per_page: 5,
             }
         })
             .then((response) => (response.data))));
@@ -40,18 +39,18 @@ export class apiRequests{
             .catch((error) => console.log(error))
     }
 
-    getUserRepos(login:string):Promise<any>{
-        return axios.get(`${this.URL}users/${login}/repos`,{
+    async getUserRepos(login:string):Promise<any>{
+        return await axios.get(`${this.URL}users/${login}/repos`,{
             headers:this.headers,
             params:{
-                per_page: 100,
+                per_page: 5,
             }
         })
             .then((response)=> response.data)
             .catch((error) => console.log(error))
     }
-    getUserCorectRepos(login:string, inputValue:string){
-        return axios.get(`${this.URL}search/repositories?q=repo:${login}/${inputValue}`,{
+    async getUserCorectRepos(login:string, inputValue:string){
+        return await axios.get(`${this.URL}search/repositories?q=repo:${login}/${inputValue}`,{
             headers:this.headers,
         })
             .then((response)=> response.data)

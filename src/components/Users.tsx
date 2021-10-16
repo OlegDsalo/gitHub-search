@@ -5,8 +5,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {axiosGetUsers} from '../AsyncThunk/usersReducer'
 import {axiosGetUsersRepo} from "../AsyncThunk/usersRepoReducer";
 import {Col, Input, Row, Spin, Typography} from "antd";
+import {UsersInfo} from "../../types/Users.interface";
 import './Users.css';
-import {UsersTypes} from "../types/Users.types";
 
 
 const Users = () => {
@@ -51,7 +51,7 @@ const Users = () => {
                         {status?
                             (<Spin className="loader" size="large" spinning={status} />):
                             (
-                            users?.items?.map((item:UsersTypes) => (
+                            users?.items?.map((item:UsersInfo) => (
                                 <Link to={`${match.url}${item.login}`} key={item.id} >
                                     <div className='img-username' >
                                         <img className='img' src={item.avatar_url} alt="#"/>
