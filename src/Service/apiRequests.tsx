@@ -2,7 +2,8 @@ import axios from "axios";
 
 export class apiRequests{
     private USER_PER_PAGE: string = '25';
-    headers = {Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}`};
+    private REACT_APP_ACCESS_TOKEN :string='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';
+    headers = {Authorization: `token ${(this.REACT_APP_ACCESS_TOKEN)}`};
     constructor(
         private URL:string = 'https://api.github.com/',
     ) {
