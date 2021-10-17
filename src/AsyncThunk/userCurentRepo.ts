@@ -5,6 +5,7 @@ import apiRequestInstance from "../Service/apiRequests";
 export const axiosGetUsersCorectRepo:any = createAsyncThunk(
     'userRepoCorect/axiosGetUserRepoCorect',
     async (login:string,inputValue:any) => {
+        debugger;
         const res = await apiRequestInstance.getUserCorectRepos(login,inputValue);
         return res;
     });

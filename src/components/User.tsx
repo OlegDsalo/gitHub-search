@@ -21,9 +21,9 @@ const User = () => {
         dispatch(axiosGetUserRepo(login));
     },[login])
 
-    // useEffect(()=>{
-    //     dispatch(axiosGetUsersCorectRepo(login,inputValue))
-    // },[inputValue])
+    useEffect(()=>{
+        dispatch(axiosGetUsersCorectRepo(login,inputValue))
+    },[inputValue])
 
     const userObj  = useSelector((state:any) => state.user);
     const {user ,isLoading} = userObj;
@@ -31,6 +31,7 @@ const User = () => {
 
     const corectRepo  = useSelector((state:any) => state.usersCorrectRepo);
     console.log(corectRepo);
+
     const handlerRepos = (event:any) => {
       setInputValue(event.target.value);
         console.log(event.target.value);
