@@ -4,10 +4,11 @@ import apiRequestInstance from "../Service/apiRequests";
 
 export const axiosGetUsersCorectRepo:any = createAsyncThunk(
     'userRepoCorect/axiosGetUserRepoCorect',
-    async (login:string,inputValue:any) => {
-        debugger;
-        const res = await apiRequestInstance.getUserCorectRepos(login,inputValue);
-        return res;
+    async (login:string,thunkAPI) => {
+        // console.log(login);
+
+        const res:any = await apiRequestInstance.getUserCorectRepos(login);
+        return res.items;
     });
 
 

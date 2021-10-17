@@ -14,7 +14,7 @@ const User = () => {
     let {login}:any = useParams();
 
     const dispatch = useDispatch();
-    const [inputValue,setInputValue] = useState();
+    const [inputValue,setInputValue] = useState('');
 
     useEffect(()=> {
         dispatch(axiosGetUser(login));
@@ -22,19 +22,19 @@ const User = () => {
     },[login])
 
     useEffect(()=>{
-        dispatch(axiosGetUsersCorectRepo(login,inputValue))
-    },[inputValue])
+        dispatch(axiosGetUsersCorectRepo({login,inputValue}))
+    },[login,inputValue])
 
     const userObj  = useSelector((state:any) => state.user);
     const {user ,isLoading} = userObj;
     const {userRepo} = useSelector((state:any) =>state.userRepo)
 
-    const corectRepo  = useSelector((state:any) => state.usersCorrectRepo);
-    console.log(corectRepo);
+    const corectRepo = useSelector((state:any) => state.userCorectRepo.usersCorrectRepo);
+    // console.log(corectRepo);
 
     const handlerRepos = (event:any) => {
       setInputValue(event.target.value);
-        console.log(event.target.value);
+        // console.log(event.target.value);
     }
 
     return (
@@ -55,17 +55,29 @@ const User = () => {
                     </div>
                 </>
             )}
+            {/*<div className='search-repo'>*/}
+            {/*         <input className="search-repos" onChange={handlerRepos} type="text"/>*/}
+            {/*         {userRepo.map((item:UserRepo) => (*/}
+            {/*         <div className='user-repos' key={item.name}>*/}
+            {/*             <p><a href={`${item.html_url}`}>{item.name}</a></p>*/}
+            {/*             <div>*/}
+            {/*                  <p>{item.forks}</p>*/}
+            {/*                 <p>{item.stargazers_count}</p>*/}
+            {/*             </div>*/}
+            {/*         </div>*/}
+            {/*      ))}*/}
+            {/*</div>*/}
             <div className='search-repo'>
-                     <input className="search-repos" onChange={handlerRepos} type="text"/>
-                     {userRepo.map((item:UserRepo) => (
-                     <div className='user-repos' key={item.name}>
-                         <p><a href={`${item.html_url}`}>{item.name}</a></p>
-                         <div>
-                              <p>{item.forks}</p>
-                             <p>{item.stargazers_count}</p>
-                         </div>
-                     </div>
-                  ))}
+                <input className="search-repos" onChange={handlerRepos} type="text"/>
+                {corectRepo.map((item:UserRepo) => (
+                    <div className='user-repos' key={item.name}>
+                        <p><a href={`${item.html_url}`}>{item.name}</a></p>
+                        <div>
+                            <p>{item.forks}</p>
+                            <p>{item.stargazers_count}</p>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

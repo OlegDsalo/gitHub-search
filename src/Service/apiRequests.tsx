@@ -39,7 +39,7 @@ export class apiRequests{
             .catch((error) => console.log(error))
     }
 
-    async getUserRepos(login:string):Promise<any>{
+    async getUserRepos(login:string){
         return await axios.get(`${this.URL}users/${login}/repos`,{
             headers:this.headers,
             params:{
@@ -49,11 +49,14 @@ export class apiRequests{
             .then((response)=> response.data)
             .catch((error) => console.log(error))
     }
-    async getUserCorectRepos(login:string, inputValue:string){
-        return await axios.get(`${this.URL}search/repositories?q=repo:${login}&in:${inputValue}`,{
+    async getUserCorectRepos(params:any){
+        return await axios.get(`${this.URL}search/repositories?q=${params.inputValue} user:${params.login} fork:true `,{
             headers:this.headers,
+            params:{
+                per_page: 10,
+            }
         })
-            .then((response)=> response)
+            .then((response)=> response.data)
             .catch((error) => console.log(error))
     }
 }
