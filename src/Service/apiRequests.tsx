@@ -12,8 +12,8 @@ export class apiRequests{
          return await axios.get(`${this.URL}search/users`,{
             headers:this.headers,
             params:{
-                per_page:5,
                 q: userName || "oleg",
+                per_page:5,
             },
         }).then((response) => response.data)
             .catch((error) => console.log(error))
@@ -50,10 +50,10 @@ export class apiRequests{
             .catch((error) => console.log(error))
     }
     async getUserCorectRepos(login:string, inputValue:string){
-        return await axios.get(`${this.URL}search/repositories?q=repo:${login}/${inputValue}`,{
+        return await axios.get(`${this.URL}search/repositories?q=repo:${login}&in:${inputValue}`,{
             headers:this.headers,
         })
-            .then((response)=> response.data)
+            .then((response)=> response)
             .catch((error) => console.log(error))
     }
 }

@@ -38,7 +38,7 @@ const Users = () => {
 
 
     return (
-        <div className='flex-box'>
+        <div className='users'>
             <div className="left-sidebar">
                 <Typography>
                     <Typography.Title>
@@ -53,7 +53,7 @@ const Users = () => {
                             (
                             users?.items?.map((item:UsersInfo) => (
                                 <Link to={`${match.url}${item.login}`} key={item.id} >
-                                    <div className='img-username' >
+                                    <div className='users-block' >
                                         <img className='img' src={item.avatar_url} alt="#"/>
                                         <Typography.Paragraph className="users-name">{item.login}</Typography.Paragraph>
                                     </div>
@@ -64,7 +64,7 @@ const Users = () => {
                     </Col>
                     <Col>
                             {usersRepo.map((repo:any)=>(
-                            <div className='blockRepos' key={repo.name}>
+                            <div className='repos-number' key={repo.name}>
                                 {repo.length === 100?(
                                     <p className='repo-number'>100+</p>
                                 ):(
