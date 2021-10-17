@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Link, Route, Switch, useRouteMatch,} from "react-router-dom";
 import User from './User';
 import {useDispatch, useSelector} from "react-redux";
-import {axiosGetUsers} from '../AsyncThunk/usersReducer'
-import {axiosGetUsersRepo} from "../AsyncThunk/usersRepoReducer";
+import {fetchUsers} from '../slice/users'
+import {fetchUsersRepos} from "../slice/usersRepos";
 import {Col, Input, Row, Spin, Typography} from "antd";
-import {UsersInfo} from "../../types/Users.interface";
+import {UsersTypes} from "../types/Users.types";
 import './Users.css';
 
 
@@ -24,18 +24,17 @@ const Users = () => {
     const {users , status}  = useSelector((state:any) => state.users);
 
     useEffect(() => {
-        dispatch(axiosGetUsers(userName));
+        dispatch(fetchUsers(userName));
     },[userName]);
 
     useEffect(() => {
         if(users){
-            dispatch(axiosGetUsersRepo(users));
+            dispatch(fetchUsersRepos(users));
         }
     },[users]);
 
 
-    const {usersRepo} = useSelector((state:any)=>state.usersRepo);
-
+    const {usersRepos} = useSelector((state:any)=> state.usersRepos);
 
     return (
         <div className='users'>
@@ -48,10 +47,10 @@ const Users = () => {
                 <Input placeholder='Search for Users' onChange={handlerSearchValue}/>
                 <Row justify='space-between' className="block" align='top'>
                     <Col>
-                        {status?
+                        {status ?
                             (<Spin className="loader" size="large" spinning={status} />):
                             (
-                            users?.items?.map((item:UsersInfo) => (
+                            users?.map((item:UsersTypes) => (
                                 <Link to={`${match.url}${item.login}`} key={item.id} >
                                     <div className='users-block' >
                                         <img className='img' src={item.avatar_url} alt="#"/>
@@ -63,8 +62,8 @@ const Users = () => {
                         }
                     </Col>
                     <Col>
-                            {usersRepo.map((repo:any)=>(
-                            <div className='repos-number' key={repo.name}>
+                            {usersRepos.map((repo:any)=>(
+                            <div className='repos-number' key={repo.id}>
                                 {repo.length === 100?(
                                     <p className='repo-number'>100+</p>
                                 ):(
@@ -78,7 +77,7 @@ const Users = () => {
             </div>
             <div >
                 <Switch>
-                    <Route path={`/:login`}>
+                    <Route path={`/:userName`}>
                         <User />
                     </Route>
                 </Switch>

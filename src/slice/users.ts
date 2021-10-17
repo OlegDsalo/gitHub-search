@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import apiRequestInstance from "../Service/apiRequests";
+import apiRequestInstance from "../service/apiRequests";
 
-export const axiosGetUsers:any = createAsyncThunk(
-    'users/axiosGetUsers',
+export const fetchUsers:any = createAsyncThunk(
+    'users/fetchUsers',
     async (userName:string ) => {
-        const res = await apiRequestInstance.getAllUsers(userName);
-        return res;
+        const res:any = await apiRequestInstance.getAllUsers(userName);
+        return res.items;
 });
 
 
@@ -19,14 +19,14 @@ export  const usersReducer = createSlice({
 
     },
     extraReducers: {
-        [axiosGetUsers.pending]: (state, action) => {
+        [fetchUsers.pending]: (state, action) => {
             state.status = true;
         },
-        [axiosGetUsers.fulfilled]: (state, action) => {
+        [fetchUsers.fulfilled]: (state, action) => {
             state.users = action.payload;
             state.status = false;
         },
-        [axiosGetUsers.rejected]: (state, action) => {
+        [fetchUsers.rejected]: (state, action) => {
             state.status = true;
         },
     },

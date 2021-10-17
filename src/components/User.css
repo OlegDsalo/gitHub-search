@@ -12,7 +12,7 @@
 }
 .user-block{
     display: flex;
-
+    flex-direction: row;
 }
 
 .user-repos{

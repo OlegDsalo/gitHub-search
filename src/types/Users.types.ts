@@ -4,7 +4,7 @@ export interface UsersTypes{
  id:string;
 }
 
-export interface UserTypes{
+export interface UserRepos {
     name:string;
     html_url:string;
     forks:string;
