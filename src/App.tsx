@@ -4,10 +4,10 @@ import {SearchUser} from "./routes/SearchUser";
 
 function App() {
     return (
-    <div className='App'>
-        <SearchUser/>
-    </div>
-  );
+        <div className='app'>
+            <SearchUser/>
+        </div>
+    );
 }
 
 export default App;

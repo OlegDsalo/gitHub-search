@@ -1,24 +1,22 @@
-import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import apiRequestInstance from "../service/apiRequests";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import githubServiceInstance from "../service/github";
 
 
-export const fetchUsersRepos:any = createAsyncThunk(
+export const fetchUsersRepos: any = createAsyncThunk(
     'usersRepo/fetchUsersRepos',
-    async (users:any ) => {
-        const res = await apiRequestInstance.getAllUsersRepos(users);
+    async (users: any) => {
+        const res = await githubServiceInstance.getAllUsersRepos(users);
         return res;
     });
 
 
-export  const usersRepos = createSlice({
-    name:'getUsers',
-    initialState:{
-        usersRepos:[],
-        status:true,
+export const usersRepos = createSlice({
+    name: 'getUsers',
+    initialState: {
+        usersRepos: [],
+        status: true,
     },
-    reducers:{
-
-    },
+    reducers: {},
     extraReducers: {
         [fetchUsersRepos.pending]: (state, action) => {
             state.status = true;

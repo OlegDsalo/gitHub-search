@@ -1,24 +1,22 @@
-import { createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import apiRequestInstance from "../service/apiRequests";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import githubServiceInstance from "../service/github";
 
 
-export const fetchUser:any = createAsyncThunk(
+export const fetchUser: any = createAsyncThunk(
     'user/fetchUser',
-    async (userName:string ) => {
-        const res = await apiRequestInstance.getUser(userName);
+    async (userName: string) => {
+        const res = await githubServiceInstance.getUser(userName);
         return res;
     });
 
 
-export  const userReducer = createSlice({
-    name:'getUsers',
-    initialState:{
-        user:[],
-        isLoading:true,
+export const userReducer = createSlice({
+    name: 'getUsers',
+    initialState: {
+        user: [],
+        isLoading: true,
     },
-    reducers:{
-
-    },
+    reducers: {},
     extraReducers: {
         [fetchUser.pending]: (state, action) => {
             state.isLoading = true;

@@ -6,7 +6,7 @@ import {
 import Users from "../components/Users";
 
 
-export  const SearchUser = () => {
+export const SearchUser = () => {
     return (
         <div>
             <Switch>
