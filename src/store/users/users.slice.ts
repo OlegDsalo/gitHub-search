@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import githubServiceInstance from "../service/github";
+import githubServiceInstance from "../../service/github";
 
 export const fetchUsers: any = createAsyncThunk(
     'users/fetchUsers',
@@ -10,7 +10,7 @@ export const fetchUsers: any = createAsyncThunk(
 
 
 export const usersReducer = createSlice({
-    name: 'getUsers',
+    name: 'users',
     initialState: {
         users: [],
         status: true,
@@ -31,3 +31,4 @@ export const usersReducer = createSlice({
 });
 
 export default usersReducer.reducer;
+

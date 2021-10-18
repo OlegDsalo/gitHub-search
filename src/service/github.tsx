@@ -1,13 +1,9 @@
 import axios from "axios";
 
-export class githubService {
-    private USER_PER_PAGE: string = '25';
+export class GithubService {
+    private USER_PER_PAGE: string = '5';
     headers = {Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}`};
-
-    constructor(
-        private URL: string = 'https://api.github.com/',
-    ) {
-    }
+    private URL: string = 'https://api.github.com/';
 
     async getAllUsers(userName: string) {
         return await axios.get(`${this.URL}search/users`, {
@@ -21,15 +17,12 @@ export class githubService {
     };
 
     getAllUsersRepos(users: any) {
-        const res: any = Promise.all(users.map((user: any) => axios.get(user.repos_url, {
+        return  Promise.all(users.map((user: any) => axios.get(user.repos_url, {
             params: {
                 per_page: 100,
             }
-        })
-            .then((response) => (response.data))));
-        return res;
-
-    };
+        }).then((response) => (response.data))));
+    }
 
     async getUser(userName: string) {
         return await axios.get(`${this.URL}users/${userName}`, {
@@ -52,6 +45,6 @@ export class githubService {
     }
 }
 
-const githubServiceInstance = new githubService();
+const githubServiceInstance = new GithubService();
 
 export default githubServiceInstance;

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import githubServiceInstance from "../service/github";
+import githubServiceInstance from "../../service/github";
 
 
 export const fetchUserRepos: any = createAsyncThunk(
@@ -11,22 +11,22 @@ export const fetchUserRepos: any = createAsyncThunk(
 
 
 export const userReposReducer = createSlice({
-    name: 'getUserCorectRepo',
+    name: 'userRepos',
     initialState: {
         userRepos: [],
-        isLoading: true,
+        isLoaded: true,
     },
     reducers: {},
     extraReducers: {
         [fetchUserRepos.pending]: (state, action) => {
-            state.isLoading = true;
+            state.isLoaded = true;
         },
         [fetchUserRepos.fulfilled]: (state, action) => {
             state.userRepos = action.payload;
-            state.isLoading = false;
+            state.isLoaded = false;
         },
         [fetchUserRepos.rejected]: (state, action) => {
-            state.isLoading = true;
+            state.isLoaded = true;
         },
     },
 });

@@ -1,16 +1,24 @@
-import React, {useEffect} from 'react';
-import {Link, Route, Switch,} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Link, Route, Switch, useRouteMatch,} from "react-router-dom";
 import User from './User';
-import {fetchUsers} from "../slice/users"
-import {fetchUsersRepos} from "../slice/usersRepos";
+import {fetchUsers} from "../store/users/users.slice"
+import {fetchUsersRepos} from "../store/usersRepos/usersRepos.slice";
 import {Col, Input, Row, Spin, Typography} from "antd";
 import {UsersTypes} from "../types/Users.types";
 import './Users.css';
-import {UsersFetchData} from "../selector/selector";
+import {useDispatch, useSelector} from "react-redux";
+import {selectUsers} from "../store/users/users.selector";
 
 
 const Users = () => {
-    const {userName, users, usersRepos, status, setUserName, dispatch, match} = UsersFetchData();
+    const {users, isLoading} = useSelector(selectUsers);
+    const {usersRepos} = useSelector((state: any) => state.usersRepos);
+
+    const dispatch = useDispatch();
+    let match = useRouteMatch();
+
+    const [userName, setUserName] = useState<any>('');
+
 
     const handlerSearchValue = (event: any) => {
         setUserName(event.target.value);
@@ -37,8 +45,8 @@ const Users = () => {
                 <Input placeholder='Search for Users' onChange={handlerSearchValue}/>
                 <Row justify='space-between' className="block" align='top'>
                     <Col>
-                        {status ?
-                            (<Spin className="loader" size="large" spinning={status}/>) :
+                        {isLoading ?
+                            (<Spin className="loader" size="large" spinning={isLoading}/>) :
                             (
                                 users?.map((item: UsersTypes) => (
                                     <Link to={`${match.url}${item.login}`} key={item.id}>
@@ -53,26 +61,23 @@ const Users = () => {
                         }
                     </Col>
                     <Col>
-                        {usersRepos.map((total: any) => (
-                            <div className='repos-number' key={total.id}>
-                                {total.length > 99 ? (
-                                    <p className='repo-number'>100+ {total.total_count}</p>
+                        {usersRepos.map((repo: any) => (
+                            <div className='repos-number' key={repo.id}>
+                                {repo.length > 99 ? (
+                                    <p className='repo-number'>100+ </p>
                                 ) : (
-
-                                    <p className='repo-number'>{total.length}</p>
+                                    <p className='repo-number'>{repo.length}</p>
                                 )}
                             </div>
                         ))}
                     </Col>
                 </Row>
             </div>
-            <div>
-                <Switch>
-                    <Route path="/:userName">
-                        <User/>
-                    </Route>
-                </Switch>
-            </div>
+            <Switch>
+                <Route path="/:userName">
+                    <User/>
+                </Route>
+            </Switch>
         </div>
     );
 };

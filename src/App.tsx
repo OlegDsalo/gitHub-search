@@ -1,12 +1,15 @@
 import React from 'react';
 import './App.css';
-import {SearchUser} from "./routes/SearchUser";
+import {Route, Switch} from "react-router-dom";
+import Users from "./components/Users";
 
 function App() {
     return (
-        <div className='app'>
-            <SearchUser/>
-        </div>
+        <Switch>
+            <Route path="/">
+                <Users/>
+            </Route>
+        </Switch>
     );
 }
 

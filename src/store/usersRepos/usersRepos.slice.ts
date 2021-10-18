@@ -1,17 +1,17 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import githubServiceInstance from "../service/github";
+import githubServiceInstance from "../../service/github";
 
 
 export const fetchUsersRepos: any = createAsyncThunk(
     'usersRepo/fetchUsersRepos',
     async (users: any) => {
-        const res = await githubServiceInstance.getAllUsersRepos(users);
+        const res:any = await githubServiceInstance.getAllUsersRepos(users);
         return res;
     });
 
 
 export const usersRepos = createSlice({
-    name: 'getUsers',
+    name: 'usersRepos',
     initialState: {
         usersRepos: [],
         status: true,
