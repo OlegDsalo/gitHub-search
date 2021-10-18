@@ -8,7 +8,7 @@ import {UserFetchData} from "../selector/selector";
 
 const User = () => {
     const {inputValue, setInputValue, user, isLoading, userRepos, dispatch, userName, status} = UserFetchData();
-    console.log(userRepos);
+
     const handlerInputValue = (event: any) => {
         setInputValue(event.target.value);
     }
