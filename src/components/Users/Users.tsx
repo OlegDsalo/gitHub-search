@@ -14,7 +14,7 @@ const Users = () => {
     const {usersRepos} = useSelector((state: any) => state.usersRepos);
 
     const dispatch = useDispatch();
-    let match = useRouteMatch();
+    const match = useRouteMatch();
 
     const [userName, setUserName] = useState<any>('');
 
