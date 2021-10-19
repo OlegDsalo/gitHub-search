@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Link, Route, Switch, useRouteMatch,} from "react-router-dom";
-import User from './User';
-import {fetchUsers} from "../store/users/users.slice"
-import {fetchUsersRepos} from "../store/usersRepos/usersRepos.slice";
+import User from '../User/User';
+import {fetchUsers} from "../../store/users/users.slice"
+import {fetchUsersRepos} from "../../store/usersRepos/usersRepos.slice";
 import {Col, Input, Row, Spin, Typography} from "antd";
-import {UsersTypes} from "../types/Users.types";
-import './Users.css';
+import {UsersTypes} from "../../types/Users.types";
 import {useDispatch, useSelector} from "react-redux";
-import {selectUsers} from "../store/users/users.selector";
-
+import {selectUsers} from "../../store/users/users.selector";
+import './Users.scss';
 
 const Users = () => {
     const {users, isLoading} = useSelector(selectUsers);
@@ -42,7 +41,7 @@ const Users = () => {
                         Git hub searcher
                     </Typography.Title>
                 </Typography>
-                <Input placeholder='Search for Users' onChange={handlerSearchValue}/>
+                <Input className='search-users-name' placeholder='Search for Users' onChange={handlerSearchValue}/>
                 <Row justify='space-between' className="block" align='top'>
                     <Col>
                         {isLoading ?

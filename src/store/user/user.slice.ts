@@ -3,7 +3,7 @@ import githubServiceInstance from "../../service/github";
 
 
 export const fetchUser: any = createAsyncThunk(
-    'user/fetchUser',
+    'User/fetchUser',
     async (userName: string) => await githubServiceInstance.getUser(userName)
     );
 
@@ -24,7 +24,7 @@ export const userReducer = createSlice({
             state.isLoading = false;
         },
         [fetchUser.rejected]: (state, action) => {
-            state.isLoading = true;
+            state.isLoading = false;
         },
     },
 });

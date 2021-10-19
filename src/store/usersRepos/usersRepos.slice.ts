@@ -26,7 +26,7 @@ export const usersRepos = createSlice({
             state.status = false;
         },
         [fetchUsersRepos.rejected]: (state, action) => {
-            state.status = true;
+            state.status = false;
         },
     },
 });

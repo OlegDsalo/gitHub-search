@@ -14,19 +14,19 @@ export const userReposReducer = createSlice({
     name: 'userRepos',
     initialState: {
         userRepos: [],
-        isLoaded: true,
+        isLoading: true,
     },
     reducers: {},
     extraReducers: {
         [fetchUserRepos.pending]: (state, action) => {
-            state.isLoaded = true;
+            state.isLoading = true;
         },
         [fetchUserRepos.fulfilled]: (state, action) => {
             state.userRepos = action.payload;
-            state.isLoaded = false;
+            state.isLoading = false;
         },
         [fetchUserRepos.rejected]: (state, action) => {
-            state.isLoaded = true;
+            state.isLoading = false;
         },
     },
 });

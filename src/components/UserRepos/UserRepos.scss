@@ -1,0 +1,15 @@
+.user-repos {
+  display: flex;
+  flex-direction: column;
+
+  .repos-item {
+    width: 903px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 10px;
+
+  }
+}

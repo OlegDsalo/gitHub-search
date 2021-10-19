@@ -1,0 +1,20 @@
+.user-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .user-bio{
+    padding-bottom: 20px;
+    white-space: normal;
+  }
+  .user{
+    display: flex;
+    flex-direction: row
+  }
+
+  .user-avatar {
+    padding: 0 30px;
+    width: 250px;
+    height: 200px;
+  }
+}
