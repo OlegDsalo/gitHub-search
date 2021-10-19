@@ -4,6 +4,7 @@ import './UserInfo.scss';
 
 const UserInfo = (props:any,) => {
     console.log(props);
+
     const user = props.user;
     const isLoading = props.isLoading;
 
