@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class GithubService {
     private USER_PER_PAGE = '5';
-    headers = {Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}`};
+    private headers = {Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}`};
     private URL = 'https://api.github.com/';
 
     async getAllUsers(userName: string) {
@@ -12,8 +12,7 @@ export class GithubService {
                 q: userName || "oleg",
                 per_page: this.USER_PER_PAGE,
             },
-        }).then((response) => response.data)
-            .catch((error) => console.log(error))
+        })
     }
 
     getAllUsersRepos(users: any) {
@@ -28,8 +27,6 @@ export class GithubService {
         return await axios.get(`${this.URL}users/${userName}`, {
             headers: this.headers,
         })
-            .then((response) => response.data)
-            .catch((error) => console.log(error))
     }
 
 
@@ -40,8 +37,6 @@ export class GithubService {
                 per_page: 100,
             }
         })
-            .then((response) => response.data)
-            .catch((error) => console.log(error))
     }
 }
 

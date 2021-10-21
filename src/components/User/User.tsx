@@ -14,17 +14,19 @@ const User = () => {
 
     const userReposReq = useSelector(selectUserRepos);
     const dispatch = useDispatch();
-    const {userName}: any = useParams();
+    let {userName}: any = useParams();
 
     const [inputValue, setInputValue] = useState('');
 
-    const handlerInputValue = (event: any) => {
+    const handleInputChange = (event: any) => {
         setInputValue(event.target.value);
     }
 
     useEffect(() => {
         dispatch(fetchUser(userName));
     }, [userName])
+
+
 
     useEffect(() => {
         dispatch(fetchUserRepos({userName, inputValue}))
@@ -38,7 +40,7 @@ const User = () => {
                 isLoading={userReq.isLoading}
             />
             <div className='search-repo'>
-                <input className="search-repos" onChange={handlerInputValue} type="text"/>
+                <input className="search-repos" onChange={handleInputChange} type="text"/>
                 <UserRepos
                     userRepos={userReposReq.userRepos}
                     isLoading={userReposReq.isLoading}

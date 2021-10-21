@@ -4,14 +4,16 @@ import User from '../User/User';
 import {fetchUsers} from "../../store/users/users.slice"
 import {fetchUsersRepos} from "../../store/usersRepos/usersRepos.slice";
 import {Col, Input, Row, Spin, Typography} from "antd";
-import {UsersTypes} from "../../types/Users.types";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUsers} from "../../store/users/users.selector";
+import {UsersTypes} from "../../types/Users.types";
 import './Users.scss';
+import {selectUsersRepos} from "../../store/usersRepos/usersRepos.selector";
+
 
 const Users = () => {
     const {users, isLoading} = useSelector(selectUsers);
-    const {usersRepos} = useSelector((state: any) => state.usersRepos);
+    const {usersRepos} = useSelector(selectUsersRepos);
 
     const dispatch = useDispatch();
     const match = useRouteMatch();
@@ -19,7 +21,7 @@ const Users = () => {
     const [userName, setUserName] = useState<any>('');
 
 
-    const handlerSearchValue = (event: any) => {
+    const handleUserNameChange = (event: any) => {
         setUserName(event.target.value);
     }
 
@@ -29,10 +31,10 @@ const Users = () => {
 
     useEffect(() => {
         if (users) {
+
             dispatch(fetchUsersRepos(users));
         }
     }, [users]);
-
     return (
         <div className='users'>
             <div className="left-sidebar">
@@ -41,7 +43,7 @@ const Users = () => {
                         Git hub searcher
                     </Typography.Title>
                 </Typography>
-                <Input className='search-users-name' placeholder='Search for Users' onChange={handlerSearchValue}/>
+                <Input className='search-users-name' placeholder='Search for Users' onChange={handleUserNameChange}/>
                 <Row justify='space-between' className="block" align='top'>
                     <Col>
                         {isLoading ?

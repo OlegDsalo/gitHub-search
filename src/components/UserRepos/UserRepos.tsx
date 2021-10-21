@@ -1,16 +1,19 @@
 import React from 'react';
 import {Spin} from "antd";
-import { UserReposType} from "../../types/Users.types";
+import {UserReposType} from "../../types/User.types";
 import './UserRepos.scss'
 
-const UserRepos = (props:any) => {
-    const userRepos = props.userRepos;
-    const isLoading = props.isLoading;
+interface UserInfoProps {
+    userRepos: UserReposType[];
+    isLoading: boolean;
+}
+//todo add elsint
 
+const UserRepos = ({userRepos, isLoading}: UserInfoProps) => {
     return (
         <div className='user-repos'>
             {isLoading ? (<Spin className="loader" size="large" spinning={isLoading}/>) : (
-                userRepos.map((item: UserReposType) => (
+                userRepos.map((item) => (
                     <div className='repos-item' key={item.name}>
                         <p><a href={item.html_url}>{item.name}</a></p>
                         <div>

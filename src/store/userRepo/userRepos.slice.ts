@@ -6,7 +6,7 @@ export const fetchUserRepos: any = createAsyncThunk(
     'userRepos/fetchUserRepos',
     async (obj: any, thunkAPI) => {
         const res: any = await githubServiceInstance.getUserRepos(obj);
-        return res.items;
+        return res.data.items;
     });
 
 

@@ -5,7 +5,7 @@ export const fetchUsers: any = createAsyncThunk(
     'Users/fetchUsers',
     async (userName: string) => {
         const res: any = await githubServiceInstance.getAllUsers(userName);
-        return res.items;
+        return res.data.items;
     });
 
 

@@ -4,7 +4,10 @@ import githubServiceInstance from "../../service/github";
 
 export const fetchUser: any = createAsyncThunk(
     'User/fetchUser',
-    async (userName: string) => await githubServiceInstance.getUser(userName)
+    async (userName: string) => {
+        const res:any = await githubServiceInstance.getUser(userName);
+        return res.data
+    }
     );
 
 

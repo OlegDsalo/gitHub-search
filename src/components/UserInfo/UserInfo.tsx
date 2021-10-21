@@ -1,14 +1,14 @@
 import React from 'react';
 import {Spin} from "antd";
 import './UserInfo.scss';
+import {UserInfoTypes} from "../../types/User.types";
 
-const UserInfo = (props:any,) => {
-    console.log(props);
+interface UserInfoProps {
+    user: UserInfoTypes;
+    isLoading: boolean;
+}
 
-    const user = props.user;
-    const isLoading = props.isLoading;
-
-    console.log(user.bio);
+const UserInfo = ({user, isLoading}: UserInfoProps) => {
     return (
         <div className='user-info'>
             {isLoading ? (<Spin className="loader" size="large" spinning={isLoading}/>) : (
@@ -24,7 +24,9 @@ const UserInfo = (props:any,) => {
                             <p>{user.following}</p>
                         </div>
                     </div>
-                    <p className="user-bio">{user.bio}</p>
+                    <div>
+                        <p className="user-bio">{user.bio}</p>
+                    </div>
                 </div>
             )}
         </div>
