@@ -5,7 +5,7 @@ import { fetchUser } from '../../store/user/user.slice';
 import { fetchUserRepos } from '../../store/userRepo/userRepos.slice';
 import { selectUserRepos } from '../../store/userRepo/userRepo.selector';
 import { selectUser } from '../../store/user/user.selector';
-import UserInfo from '../UserInfo/UserInfo';
+import UserDescription from '../UserInfo/UserDescription';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
 
@@ -36,7 +36,7 @@ const User = () => {
   return (
     <div className="user">
       <h1 className="title">GitHub Search</h1>
-      <UserInfo
+      <UserDescription
         user={userReq.user}
         isLoading={userReq.isLoading}
       />

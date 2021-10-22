@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spin } from 'antd';
-import './UserInfo.scss';
+import './UserDescription.scss';
 import { UserInfoTypes } from '../../types/User.types';
 
 interface UserInfoProps {
@@ -8,8 +8,8 @@ interface UserInfoProps {
     isLoading: boolean;
 }
 
-const UserInfo = ({ user, isLoading }: UserInfoProps) => (
-  <div className="user-info">
+const UserDescription = ({ user, isLoading }: UserInfoProps) => (
+  <div className="user-description">
     {isLoading ? (<Spin className="loader" size="large" spinning={isLoading} />) : (
       <div className="">
         <div className="user">
@@ -31,4 +31,4 @@ const UserInfo = ({ user, isLoading }: UserInfoProps) => (
   </div>
 );
 
-export default UserInfo;
+export default UserDescription;
