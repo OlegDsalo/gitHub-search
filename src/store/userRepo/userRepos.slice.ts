@@ -9,10 +9,10 @@ export const fetchUserRepos: any = createAsyncThunk(
   },
 );
 
-export const userReposReducer = createSlice({
+export const userRepos = createSlice({
   name: 'userRepos',
   initialState: {
-    userRepos: [],
+    repositories: [],
     isLoading: true,
   },
   reducers: {},
@@ -21,7 +21,7 @@ export const userReposReducer = createSlice({
       state.isLoading = true;
     },
     [fetchUserRepos.fulfilled]: (state, action) => {
-      state.userRepos = action.payload;
+      state.repositories = action.payload;
       state.isLoading = false;
     },
     [fetchUserRepos.rejected]: (state, action) => {
@@ -30,4 +30,4 @@ export const userReposReducer = createSlice({
   },
 });
 
-export default userReposReducer.reducer;
+export default userRepos.reducer;

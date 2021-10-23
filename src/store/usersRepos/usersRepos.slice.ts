@@ -3,8 +3,8 @@ import githubServiceInstance from '../../service/github';
 
 export const fetchUsersRepos: any = createAsyncThunk(
   'usersRepo/fetchUsersRepos',
-  async (users: any) => {
-    const res:any = await githubServiceInstance.getAllUsersRepos(users);
+  async (data: any) => {
+    const res:any = await githubServiceInstance.getAllUsersRepos(data);
     return res;
   },
 );
@@ -12,7 +12,7 @@ export const fetchUsersRepos: any = createAsyncThunk(
 export const usersRepos = createSlice({
   name: 'usersRepos',
   initialState: {
-    usersRepos: [],
+    repositories: [],
     isLoading: true,
   },
   reducers: {},
@@ -21,7 +21,7 @@ export const usersRepos = createSlice({
       state.isLoading = true;
     },
     [fetchUsersRepos.fulfilled]: (state, action) => {
-      state.usersRepos = action.payload;
+      state.repositories = action.payload;
       state.isLoading = false;
     },
     [fetchUsersRepos.rejected]: (state, action) => {

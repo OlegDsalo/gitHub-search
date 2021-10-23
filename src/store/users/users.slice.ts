@@ -9,10 +9,10 @@ export const fetchUsers: any = createAsyncThunk(
   },
 );
 
-export const usersReducer = createSlice({
+export const users = createSlice({
   name: 'users',
   initialState: {
-    users: [],
+    data: [],
     isLoading: true,
   },
   reducers: {},
@@ -21,7 +21,7 @@ export const usersReducer = createSlice({
       state.isLoading = true;
     },
     [fetchUsers.fulfilled]: (state, action) => {
-      state.users = action.payload;
+      state.data = action.payload;
       state.isLoading = false;
     },
     [fetchUsers.rejected]: (state, action) => {
@@ -30,4 +30,4 @@ export const usersReducer = createSlice({
   },
 });
 
-export default usersReducer.reducer;
+export default users.reducer;

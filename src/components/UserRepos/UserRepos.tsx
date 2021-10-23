@@ -4,14 +4,14 @@ import { UserReposType } from '../../types/User.types';
 import './UserRepos.scss';
 
 interface UserInfoProps {
-    userRepos: UserReposType[];
+    repositories: UserReposType[];
     isLoading: boolean;
 }
 
-const UserRepos = ({ userRepos, isLoading }: UserInfoProps) => (
+const UserRepos = ({ repositories, isLoading }: UserInfoProps) => (
   <div className="user-repos">
     {isLoading ? (<Spin className="loader" size="large" spinning={isLoading} />) : (
-      userRepos.map((item) => (
+      repositories.map((item) => (
         <div className="repos-item" key={item.name}>
           <p><a href={item.html_url}>{item.name}</a></p>
           <div>

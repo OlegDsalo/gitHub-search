@@ -5,10 +5,10 @@ export class GithubService {
 
     private headers = { Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}` };
 
-    private URL = 'https://api.github.com/';
+    private readonly baseUrl = 'https://api.github.com/';
 
     async getAllUsers(userName: string) {
-      return await axios.get(`${this.URL}search/users`, {
+      return await axios.get(`${this.baseUrl}search/users`, {
         headers: this.headers,
         params: {
           q: userName || 'oleg',
@@ -17,8 +17,8 @@ export class GithubService {
       });
     }
 
-    getAllUsersRepos(users: any) {
-      return Promise.all(users.map((user: any) => axios.get(user.repos_url, {
+    getAllUsersRepos(data: any) {
+      return Promise.all(data.map((user: any) => axios.get(user.repos_url, {
         params: {
           per_page: 100,
         },
@@ -26,13 +26,13 @@ export class GithubService {
     }
 
     async getUser(userName: string) {
-      return await axios.get(`${this.URL}users/${userName}`, {
+      return await axios.get(`${this.baseUrl}users/${userName}`, {
         headers: this.headers,
       });
     }
 
     async getUserRepos(params: any) {
-      return await axios.get(`${this.URL}search/repositories?q=${params.inputValue} user:${params.userName} fork:true `, {
+      return await axios.get(`${this.baseUrl}search/repositories?q=${params.inputValue} user:${params.userName} fork:true `, {
         headers: this.headers,
         params: {
           per_page: 100,

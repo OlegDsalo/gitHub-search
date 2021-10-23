@@ -5,7 +5,7 @@ import { fetchUser } from '../../store/user/user.slice';
 import { fetchUserRepos } from '../../store/userRepo/userRepos.slice';
 import { selectUserRepos } from '../../store/userRepo/userRepo.selector';
 import { selectUser } from '../../store/user/user.selector';
-import UserDescription from '../UserInfo/UserDescription';
+import UserProfile from '../UserProfile/UserProfile';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
 
@@ -15,7 +15,6 @@ interface ParamTypes {
 
 const User = () => {
   const userReq = useSelector(selectUser);
-
   const userReposReq = useSelector(selectUserRepos);
   const dispatch = useDispatch();
   const { userName } = useParams<ParamTypes>();
@@ -36,14 +35,14 @@ const User = () => {
   return (
     <div className="user">
       <h1 className="title">GitHub Search</h1>
-      <UserDescription
-        user={userReq.user}
+      <UserProfile
+        data={userReq.data}
         isLoading={userReq.isLoading}
       />
       <div className="search-repo">
         <input className="search-repos" onChange={handleInputChange} type="text" />
         <UserRepos
-          userRepos={userReposReq.userRepos}
+          repositories={userReposReq.repositories}
           isLoading={userReposReq.isLoading}
         />
       </div>

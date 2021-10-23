@@ -5,7 +5,7 @@ export interface UserReposType {
     stargazers_count: number;
 }
 
-export interface UserInfoTypes {
+export interface UserProfileTypes {
     login: string,
     location: string,
     email: string,

@@ -11,8 +11,8 @@ import { selectUsersRepos } from '../../store/usersRepos/usersRepos.selector';
 import './Users.scss';
 
 const Users = () => {
-  const { users, isLoading } = useSelector(selectUsers);
-  const { usersRepos } = useSelector(selectUsersRepos);
+  const { data, isLoading } = useSelector(selectUsers);
+  const usersRepoReq = useSelector(selectUsersRepos);
 
   const dispatch = useDispatch();
   const match = useRouteMatch();
@@ -27,10 +27,10 @@ const Users = () => {
   }, [userName]);
 
   useEffect(() => {
-    if (users) {
-      dispatch(fetchUsersRepos(users));
+    if (data) {
+      dispatch(fetchUsersRepos(data));
     }
-  }, [users]);
+  }, [data]);
   return (
     <div className="users">
       <div className="left-sidebar">
@@ -45,12 +45,12 @@ const Users = () => {
             {isLoading
               ? (<Spin className="loader" size="large" spinning={isLoading} />)
               : (
-                users.map((item: UsersTypes) => (
-                  <Link to={`${match.url}${item.login}`} key={item.id}>
+                data.map((user: UsersTypes) => (
+                  <Link to={`${match.url}${user.login}`} key={user.id}>
                     <div className="users-block">
-                      <img className="img" src={item.avatar_url} alt="#" />
+                      <img className="img" src={user.avatar_url} alt="#" />
                       <Typography.Paragraph className="users-name">
-                        {item.login}
+                        {user.login}
                       </Typography.Paragraph>
                     </div>
                   </Link>
@@ -58,15 +58,19 @@ const Users = () => {
               )}
           </Col>
           <Col>
-            {usersRepos.map((repo: {id:number, length:number}) => (
-              <div className="repos-number" key={repo.id}>
-                {repo.length > 99 ? (
-                  <p className="repo-number">100+ </p>
-                ) : (
-                  <p className="repo-number">{repo.length}</p>
-                )}
-              </div>
-            ))}
+            {usersRepoReq.isLoading
+              ? (<Spin className="loader" size="large" spinning={usersRepoReq.isLoading} />)
+              : (
+                usersRepoReq.repositories.map((repo: {id:number, length:number}) => (
+                  <div className="repos-number" key={repo.id}>
+                    {repo.length > 99 ? (
+                      <p className="repo-number">100+ </p>
+                    ) : (
+                      <p className="repo-number">{repo.length}</p>
+                    )}
+                  </div>
+                ))
+              )}
           </Col>
         </Row>
       </div>
