@@ -5,9 +5,9 @@
 /.pnp
 .pnp.js
 /.idea
+.idea
 # testing
 /coverage
-.idea
 # production
 /build
 
