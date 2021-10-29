@@ -1,51 +1,74 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Col, Input, Row, Spin, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import User from '../User/User';
-import { fetchUsers } from '../../store/users/users.slice';
+import { fetchUsers, setCurrentPage } from '../../store/users/users.slice';
 import { fetchUsersRepos } from '../../store/usersRepos/usersRepos.slice';
-import { selectUsers } from '../../store/users/users.selector';
-import { UsersTypes } from '../../types/Users.types';
-import { selectUsersRepos } from '../../store/usersRepos/usersRepos.selector';
+import {
+  selectUsers, selectUsersCurrentPage,
+  selectUsersData, selectUsersIsLoading, selectUsersTotalCount,
+} from '../../store/users/users.selector';
+import { UsersValue } from '../../types/Users.types';
+import { selectUsersRepoIsLoading, selectUsersRepositories } from '../../store/usersRepos/usersRepos.selector';
+import Pagination from '../pagination/Pagination';
 import './Users.scss';
 
 const Users = () => {
-  const { data, isLoading } = useSelector(selectUsers);
-  const usersRepoReq = useSelector(selectUsersRepos);
-
   const dispatch = useDispatch();
   const match = useRouteMatch();
+  // todo pagination
+  const PER_PAGE = 3;
+  const currentPage = useSelector(selectUsersCurrentPage);
+  const totalCount = useSelector(selectUsersTotalCount);
+  const pagesCount = Math.ceil(totalCount / PER_PAGE);
+  console.log(pagesCount);
+  // const testpages = [];
+  // // todo manupulation with numbers
+  // for (let i = 1; i <= pagesCount; i++) {
+  //   testpages.push(i);
+  // }
+  // console.log('test', testpages);
+  //  12
+  const obj = useSelector(selectUsers);
+  console.log('component obj', obj);
+  // const pages = [1, 2, 3, 4, 5];
+
+  const data = useSelector(selectUsersData);
+  const usersIsLoading = useSelector(selectUsersIsLoading);
+  const repositories = useSelector(selectUsersRepositories);
+  const isLoading = useSelector(selectUsersRepoIsLoading);
 
   const [userName, setUserName] = useState<string>('');
-  const handleUserNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleUserNameChange = (event) => {
     setUserName(event.target.value);
   };
 
   useEffect(() => {
-    dispatch(fetchUsers(userName));
-  }, [userName]);
+    dispatch(fetchUsers({ userName, currentPage }));
+  }, [userName, currentPage]);
 
-  useEffect(() => {
-    if (data) {
-      dispatch(fetchUsersRepos(data));
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch(fetchUsersRepos(data));
+  //   }
+  // }, [data]);
   return (
     <div className="users">
       <div className="left-sidebar">
         <Typography>
           <Typography.Title>
-            Git hub searcher
+            Github search Users
           </Typography.Title>
         </Typography>
-        <Input className="search-users-name" placeholder="Search for Users" onChange={handleUserNameChange} />
-        <Row justify="space-between" className="block" align="top">
-          <Col>
-            {isLoading
-              ? (<Spin className="loader" size="large" spinning={isLoading} />)
-              : (
-                data.map((user: UsersTypes) => (
+        <input className="search-users-name" placeholder="Search for Users" onChange={handleUserNameChange} />
+        {usersIsLoading
+          ? (<Spin className="loader" size="large" spinning={usersIsLoading} />)
+          : (
+            <Row justify="space-between" className="block" align="top">
+              <Col>
+                {
+                data.map((user: UsersValue) => (
                   <Link to={`${match.url}${user.login}`} key={user.id}>
                     <div className="users-block">
                       <img className="img" src={user.avatar_url} alt="#" />
@@ -55,24 +78,30 @@ const Users = () => {
                     </div>
                   </Link>
                 ))
-              )}
-          </Col>
-          <Col>
-            {usersRepoReq.isLoading
-              ? (<Spin className="loader" size="large" spinning={usersRepoReq.isLoading} />)
-              : (
-                usersRepoReq.repositories.map((repo: {id:number, length:number}) => (
+              }
+              </Col>
+              <Col>
+                {
+                repositories.map((repo: {id:number, length:number}) => (
                   <div className="repos-number" key={repo.id}>
                     {repo.length > 99 ? (
-                      <p className="repo-number">100+ </p>
+                      <p className="repo-number">Repos: 100+ </p>
                     ) : (
-                      <p className="repo-number">{repo.length}</p>
+                      <p className="repo-number">
+                        Repos:
+                        &nbsp;
+                        {repo.length}
+                      </p>
                     )}
                   </div>
                 ))
-              )}
-          </Col>
-        </Row>
+              }
+              </Col>
+            </Row>
+          )}
+        <div>
+          <Pagination currentPage={currentPage} lastPage={pagesCount} pagesCount={pagesCount} />
+        </div>
       </div>
       <Switch>
         <Route path="/:userName">
@@ -84,3 +113,21 @@ const Users = () => {
 };
 
 export default Users;
+
+// <Col>
+//   {
+//     repositories.map((repo: {id:number, length:number}) => (
+//       <div className="repos-number" key={repo.id}>
+//         {repo.length > 99 ? (
+//           <p className="repo-number">Repos: 100+ </p>
+//         ) : (
+//           <p className="repo-number">
+//             Repos:
+//             &nbsp;
+//             {repo.length}
+//           </p>
+//         )}
+//       </div>
+//     ))
+//   }
+// </Col>

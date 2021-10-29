@@ -1,15 +1,32 @@
 .users {
   display: flex;
   flex-direction: row;
+  position: relative;
 
+  .page, .current-page{
+    width: 25px;
+    height: 25px;
+    border:1px solid red;
+    margin-left:10px;
+    cursor:pointer;
+  }
+
+  .current-page{
+    color: deepskyblue;
+    font-weight: 700;
+    border:2px solid orange;
+  }
 
   .search-users-name {
     text-align: center;
+    width: 80%;
   }
 
   .left-sidebar {
     text-align: center;
     width: 50%;
+    position:fixed;
+    float:left;
   }
 
   .loader {

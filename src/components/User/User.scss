@@ -5,17 +5,23 @@
   display: flex;
   flex-direction: column;
 
-
+  left: 50%;
+  position: relative;
   .search-repo {
     width: 100%;
   }
 
   .search-repos {
-    margin: 50px 10%;
+    margin: 20px 10%;
     width: 80%;
   }
 
-  .title {
+  .repos-title {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .user-title {
     text-align: center;
   }
 }

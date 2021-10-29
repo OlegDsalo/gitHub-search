@@ -3,9 +3,10 @@ import githubServiceInstance from '../../service/github';
 
 export const fetchUsers: any = createAsyncThunk(
   'Users/fetchUsers',
-  async (userName: string) => {
-    const res: any = await githubServiceInstance.getAllUsers(userName);
-    return res.data.items;
+  async (obj) => {
+    const res: any = await githubServiceInstance.getAllUsers(obj);
+    console.log('resfetch', res.data);
+    return res.data;
   },
 );
 
@@ -14,15 +15,22 @@ export const users = createSlice({
   initialState: {
     data: [],
     isLoading: true,
+    currentPage: 1,
+    total_count: 0,
   },
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: {
     [fetchUsers.pending]: (state, action) => {
       state.isLoading = true;
     },
     [fetchUsers.fulfilled]: (state, action) => {
-      state.data = action.payload;
+      state.data = action.payload.items;
       state.isLoading = false;
+      state.total_count = action.payload.total_count;
     },
     [fetchUsers.rejected]: (state, action) => {
       state.isLoading = false;
@@ -31,3 +39,5 @@ export const users = createSlice({
 });
 
 export default users.reducer;
+
+export const { setCurrentPage } = users.actions;

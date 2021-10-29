@@ -2,9 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchUser } from '../../store/user/user.slice';
-import { fetchUserRepos } from '../../store/userRepo/userRepos.slice';
-import { selectUserRepos } from '../../store/userRepo/userRepo.selector';
-import { selectUser } from '../../store/user/user.selector';
+import { selectUser, selectUserData, selectUserIsLoading } from '../../store/user/user.selector';
 import UserProfile from '../UserProfile/UserProfile';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
@@ -14,13 +12,13 @@ interface ParamTypes {
 }
 
 const User = () => {
-  const userReq = useSelector(selectUser);
-  const userReposReq = useSelector(selectUserRepos);
+  const userReq = useSelector(selectUserData);
+  const userIsLoadingReq = useSelector(selectUserIsLoading);
   const dispatch = useDispatch();
   const { userName } = useParams<ParamTypes>();
   const [inputValue, setInputValue] = useState<string>('');
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
@@ -28,22 +26,23 @@ const User = () => {
     dispatch(fetchUser(userName));
   }, [userName]);
 
-  useEffect(() => {
-    dispatch(fetchUserRepos({ userName, inputValue }));
-  }, [userName, inputValue]);
+  // useEffect(() => {
+  //   dispatch(fetchUserRepos({ userName, inputValue, currentPage }));
+  // }, [userName, inputValue]);
 
   return (
     <div className="user">
-      <h1 className="title">GitHub Search</h1>
+      <h1 className="user-title">User Profile</h1>
       <UserProfile
-        data={userReq.data}
-        isLoading={userReq.isLoading}
+        data={userReq}
+        isLoading={userIsLoadingReq}
       />
       <div className="search-repo">
+        <h1 className="repos-title">Search by repo name</h1>
         <input className="search-repos" onChange={handleInputChange} type="text" />
         <UserRepos
-          repositories={userReposReq.repositories}
-          isLoading={userReposReq.isLoading}
+          userName={userName}
+          inputValue={inputValue}
         />
       </div>
     </div>

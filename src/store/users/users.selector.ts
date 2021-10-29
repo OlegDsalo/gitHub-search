@@ -1,8 +1,24 @@
 import { createSelector } from 'reselect';
 
-export const selectSelf = (state: any) => state;
+// export const selectSelf = (state) => state;
+export const selectUsers = (state) => state.users;
 
-export const selectUsers = createSelector(
-  selectSelf,
-  (state) => state.users,
+export const selectUsersData = createSelector(
+  selectUsers,
+  (state) => state.data,
+);
+
+export const selectUsersIsLoading = createSelector(
+  selectUsers,
+  (state) => state.isLoading,
+);
+
+export const selectUsersCurrentPage = createSelector(
+  selectUsers,
+  (state) => state.currentPage,
+);
+
+export const selectUsersTotalCount = createSelector(
+  selectUsers,
+  (state) => state.total_count,
 );

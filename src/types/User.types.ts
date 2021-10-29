@@ -1,11 +1,11 @@
-export interface UserReposType {
+export interface UserReposValue {
     name: string;
     html_url: string;
     forks: number;
     stargazers_count: number;
 }
 
-export interface UserProfileTypes {
+export interface UserProfileValue {
     login: string,
     location: string,
     email: string,
@@ -15,3 +15,8 @@ export interface UserProfileTypes {
     bio: string,
     avatar_url: string;
 }
+
+// export enum AnimalTypes{
+//     dog,
+//     cat,
+// }
