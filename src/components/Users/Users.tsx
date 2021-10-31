@@ -13,6 +13,7 @@ import { UsersValue } from '../../types/Users.types';
 import { selectUsersRepoIsLoading, selectUsersRepositories } from '../../store/usersRepos/usersRepos.selector';
 import Pagination from '../pagination/Pagination';
 import './Users.scss';
+import githubServiceInstance from '../../service/github';
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -40,11 +41,13 @@ const Users = () => {
     dispatch(fetchUsers({ userName, currentPage }));
   }, [userName, currentPage]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(fetchUsersRepos(data));
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchUsersRepos(data));
+      githubServiceInstance.testgetAllUsersRepos(data)
+        . then((r) => console.log('resp r', r));
+    }
+  }, [data]);
   return (
     <div className="users">
       <div className="left-sidebar">
@@ -74,6 +77,7 @@ const Users = () => {
               </Col>
               <Col>
                 {
+                  // todo swap to total_count refactor reducer
                 repositories.map((repo: {id:number, length:number}, index:number) => (
                   <div className="repos-number" key={index}>
                     {repo.length > 99 ? (

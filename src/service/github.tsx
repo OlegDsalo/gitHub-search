@@ -26,6 +26,17 @@ export class GithubService {
       }).then((response) => (response.data))));
     }
 
+    testgetAllUsersRepos(data: any) {
+      return Promise.all(data.map((user: any) => axios.get(`${this.baseUrl}search/repositories?q= user:${user.login} fork:true `, {
+        params: {
+          per_page: 1,
+        },
+      }).then((response) => {
+        console.log(response.data);
+        return (response.data);
+      })));
+    }
+
     async getUser(userName: string) {
       return await axios.get(`${this.baseUrl}users/${userName}`, {
         headers: this.headers,
