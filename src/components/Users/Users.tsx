@@ -22,17 +22,9 @@ const Users = () => {
   const currentPage = useSelector(selectUsersCurrentPage);
   const totalCount = useSelector(selectUsersTotalCount);
   const pagesCount = Math.ceil(totalCount / PER_PAGE);
-  console.log(pagesCount);
-  // const testpages = [];
-  // // todo manupulation with numbers
-  // for (let i = 1; i <= pagesCount; i++) {
-  //   testpages.push(i);
-  // }
-  // console.log('test', testpages);
-  //  12
-  const obj = useSelector(selectUsers);
-  console.log('component obj', obj);
-  // const pages = [1, 2, 3, 4, 5];
+  // console.log(pagesCount);
+  // const obj = useSelector(selectUsers);
+  // console.log('component obj', obj);
 
   const data = useSelector(selectUsersData);
   const usersIsLoading = useSelector(selectUsersIsLoading);
@@ -100,7 +92,7 @@ const Users = () => {
             </Row>
           )}
         <div>
-          <Pagination currentPage={currentPage} lastPage={pagesCount} pagesCount={pagesCount} />
+          <Pagination currentPage={currentPage} pagesCount={pagesCount} />
         </div>
       </div>
       <Switch>
@@ -113,21 +105,3 @@ const Users = () => {
 };
 
 export default Users;
-
-// <Col>
-//   {
-//     repositories.map((repo: {id:number, length:number}) => (
-//       <div className="repos-number" key={repo.id}>
-//         {repo.length > 99 ? (
-//           <p className="repo-number">Repos: 100+ </p>
-//         ) : (
-//           <p className="repo-number">
-//             Repos:
-//             &nbsp;
-//             {repo.length}
-//           </p>
-//         )}
-//       </div>
-//     ))
-//   }
-// </Col>

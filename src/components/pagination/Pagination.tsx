@@ -3,28 +3,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage } from '../../store/users/users.slice';
 import { selectUsersCurrentPage } from '../../store/users/users.selector';
 import { createPages } from './createPages';
+import './pagination.scss';
 
-// eslint-disable-next-line react/prop-types
-const Pagination = ({ currentPage, lastPage, pagesCount }:any) => {
+interface PaginationProps{
+  currentPage: number,
+  pagesCount: number,
+}
+
+const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
   const dispatch = useDispatch();
   const pages = [];
   createPages(pages, pagesCount, currentPage);
-
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="pagination">
       {pages.map((page) => (
-        <div key={page}>
-          <span
-            className={currentPage === page ? 'current-page' : 'page'}
-            key={page}
-            onClick={() => dispatch(setCurrentPage(page))}
-          >
-            {page}
-          </span>
-        </div>
+        <span
+          className={currentPage === page ? 'current-page' : 'page'}
+          key={page}
+          onClick={() => dispatch(setCurrentPage(page))}
+        >
+          {page}
+        </span>
       ))}
-      <span>&hellip;</span>
-      <span className="page" onClick={() => dispatch(setCurrentPage(pagesCount))}>{pagesCount}</span>
+      {currentPage === pagesCount || currentPage + 3 === pagesCount ? (<></>)
+        : (
+          <>
+            &hellip;
+            <span
+              className="last-page"
+              onClick={() => dispatch(setCurrentPage(pagesCount))}
+            >{pagesCount}
+            </span>
+          </>
+        )}
     </div>
   );
 };
