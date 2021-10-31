@@ -5,6 +5,7 @@ import { fetchUserRepos } from '../../store/userRepo/userRepos.slice';
 import { UserReposValue } from '../../types/User.types';
 import './UserRepos.scss';
 import { selectUserRepositories, selectUserRepositoriesIsLoading } from '../../store/userRepo/userRepo.selector';
+import Repositories from './Repositories';
 
 interface UserInfoProps {
   userName:string;
@@ -15,51 +16,47 @@ const UserRepos = ({ userName, inputValue }: UserInfoProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectUserRepositoriesIsLoading);
   const repositories = useSelector(selectUserRepositories);
+  const [repoPage, setRepoPage] = useState<number>(1);
+  // const [repos, setRepos] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  console.log('repositories', repositories);
   useEffect(() => {
-    dispatch(fetchUserRepos({ userName, inputValue, currentPage }));
-  }, [userName, inputValue, currentPage]);
+    dispatch(fetchUserRepos({
+      userName,
+      inputValue,
+      repoPage,
+    }));
+  }, [userName, inputValue, repoPage]);
+  // todo pagination
+
   // console.log('curentPage', currentPage);
   // console.log('repositories', repositories);
-  // useEffect(() => {
-  //   document.addEventListener('scroll', scrollHandler);
-  //   return function () {
-  //     document.removeEventListener('scroll', scrollHandler);
-  //   };
-  // }, []);
-  // const scrollHandler = (e) => {
-  // eslint-disable-next-line max-len
-  // if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
-  //   console.log('scroll');
-  // }
-  // console.log('scrollHeight', e.target.documentElement.scrollHeight);
-  // console.log('scrollTop', e.target.documentElement.scrollTop);
-  // console.log('innerHeight', window.innerHeight);
-  // };
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler);
+    return function () {
+      document.removeEventListener('scroll', scrollHandler);
+    };
+  }, []);
+  const scrollHandler = (e) => {
+    // if (isLoading) {
+    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+      setRepoPage((prevState) => {
+        console.log('prevState must +1', prevState);
+        return (prevState + 1);
+      });
+      console.log('scroll', repoPage);
+    }
+    // }
+    // console.log('scrollHeight', e.target.documentElement.scrollHeight);
+    // console.log('scrollTop', e.target.documentElement.scrollTop);
+    // console.log('innerHeight', window.innerHeight);
+  };
   return (
     <div className="user-repos">
-      {isLoading
-        ? (<Spin className="loader" size="large" spinning={isLoading} />)
-        : (
-          repositories.map((item) => (
-            <div className="repos-item" key={item.name}>
-              <p><a href={item.html_url}>{item.name}</a></p>
-              <div>
-                <p>{item.forks}<img
-                  src="https://img.icons8.com/material-outlined/24/000000/star--v2.png"
-                  alt="star"
-                />
-                </p>
-                <p>{item.stargazers_count}<img
-                  src="https://img.icons8.com/material-sharp/24/000000/code-fork.png"
-                  alt="fork"
-                />
-                </p>
-              </div>
-            </div>
-          ))
-        )}
+      {repositories.map((repo, index) => (
+        <Repositories repo={repo} key={index} />
+      ))}
+      {/* <Spin className="loader" size="large" spinning={isLoading} /> */}
     </div>
   );
 };

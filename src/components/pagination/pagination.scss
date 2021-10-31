@@ -3,9 +3,9 @@
   flex-direction: row;
   justify-content: center;
 
-  .page, .current-page {
+  .page, .current-page, .first-page, .last-page {
     border: 1px solid red;
-    margin-left: 10px;
+    margin: 0 5px;
     cursor: pointer;
     padding: 5px;
   }
@@ -16,9 +16,8 @@
     border: 2px solid orange;
   }
 
-  .last-page {
-    border: 1px solid red;
-    padding: 5px 5px 0 5px;
-
+  .three-dot {
+    margin: 0 5px;
   }
+
 }

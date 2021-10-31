@@ -37,7 +37,7 @@ export class GithubService {
         headers: this.headers,
         params: {
           per_page: 10,
-          page: params.currentPage,
+          page: params.repoPage,
         },
       });
     }

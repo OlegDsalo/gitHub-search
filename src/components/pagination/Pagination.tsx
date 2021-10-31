@@ -13,9 +13,20 @@ interface PaginationProps{
 const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
   const dispatch = useDispatch();
   const pages = [];
+  const FIRST_PAGE = 1;
   createPages(pages, pagesCount, currentPage);
   return (
     <div className="pagination">
+      {currentPage === 5 ? (
+        <>
+          <span
+            className="first-page"
+            onClick={() => dispatch(setCurrentPage(FIRST_PAGE))}
+          >{FIRST_PAGE}
+          </span>
+          <span className="three-dot">&hellip;</span>
+        </>
+      ) : (<></>)}
       {pages.map((page) => (
         <span
           className={currentPage === page ? 'current-page' : 'page'}
@@ -28,7 +39,7 @@ const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
       {currentPage === pagesCount || currentPage + 3 === pagesCount ? (<></>)
         : (
           <>
-            &hellip;
+            <span className="three-dot">&hellip;</span>
             <span
               className="last-page"
               onClick={() => dispatch(setCurrentPage(pagesCount))}

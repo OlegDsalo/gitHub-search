@@ -21,7 +21,8 @@ export const userRepos = createSlice({
       state.isLoading = true;
     },
     [fetchUserRepos.fulfilled]: (state, action) => {
-      state.repositories = action.payload;
+      // state.repositories = [...state.repositories, action.payload];
+      state.repositories.push(action.payload);
       state.isLoading = false;
     },
     [fetchUserRepos.rejected]: (state, action) => {

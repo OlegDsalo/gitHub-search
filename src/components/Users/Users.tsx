@@ -74,8 +74,8 @@ const Users = () => {
               </Col>
               <Col>
                 {
-                repositories.map((repo: {id:number, length:number}) => (
-                  <div className="repos-number" key={repo.id}>
+                repositories.map((repo: {id:number, length:number}, index:number) => (
+                  <div className="repos-number" key={index}>
                     {repo.length > 99 ? (
                       <p className="repo-number">Repos: 100+ </p>
                     ) : (
