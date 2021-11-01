@@ -39,15 +39,13 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(fetchUsers({ userName, currentPage }));
-  }, [userName, currentPage]);
+  }, [userName, currentPage, dispatch]);
 
-  useEffect(() => {
-    if (data) {
-      dispatch(fetchUsersRepos(data));
-      githubServiceInstance.testgetAllUsersRepos(data)
-        . then((r) => console.log('resp r', r));
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch(fetchUsersRepos(data));
+  //   }
+  // }, [data]);
   return (
     <div className="users">
       <div className="left-sidebar">
@@ -76,22 +74,11 @@ const Users = () => {
               }
               </Col>
               <Col>
-                {
-                  // todo swap to total_count refactor reducer
-                repositories.map((repo: {id:number, length:number}, index:number) => (
+                {repositories.map((repo: {total_count:number}, index:number) => (
                   <div className="repos-number" key={index}>
-                    {repo.length > 99 ? (
-                      <p className="repo-number">Repos: 100+ </p>
-                    ) : (
-                      <p className="repo-number">
-                        Repos:
-                        &nbsp;
-                        {repo.length}
-                      </p>
-                    )}
+                    <p className="repo-number">Repos: {repo.total_count} </p>
                   </div>
-                ))
-              }
+                ))}
               </Col>
             </Row>
           )}

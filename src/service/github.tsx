@@ -18,15 +18,15 @@ export class GithubService {
       });
     }
 
-    getAllUsersRepos(data: any) {
-      return Promise.all(data.map((user: any) => axios.get(user.repos_url, {
-        params: {
-          per_page: 1,
-        },
-      }).then((response) => (response.data))));
-    }
+    // getAllUsersRepos(data: any) {
+    //   return Promise.all(data.map((user: any) => axios.get(user.repos_url, {
+    //     params: {
+    //       per_page: 1,
+    //     },
+    //   }).then((response) => (response.data))));
+    // }
 
-    testgetAllUsersRepos(data: any) {
+    getAllUsersRepos(data: any) {
       return Promise.all(data.map((user: any) => axios.get(`${this.baseUrl}search/repositories?q= user:${user.login} fork:true `, {
         params: {
           per_page: 1,

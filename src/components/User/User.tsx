@@ -24,11 +24,11 @@ const User = () => {
 
   useEffect(() => {
     dispatch(fetchUser(userName));
-  }, [userName]);
+  }, [dispatch, userName]);
 
   // useEffect(() => {
   //   dispatch(fetchUserRepos({ userName, inputValue, currentPage }));
-  // }, [userName, inputValue]);
+  // }, [dispatch, userName, inputValue]);
 
   return (
     <div className="user">

@@ -17,7 +17,7 @@ const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
   createPages(pages, pagesCount, currentPage);
   return (
     <div className="pagination">
-      {currentPage === 5 ? (
+      {currentPage >= 5 ? (
         <>
           <span
             className="first-page"
