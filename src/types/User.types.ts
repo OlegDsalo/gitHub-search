@@ -15,8 +15,3 @@ export interface UserProfileValue {
     bio: string,
     avatar_url: string;
 }
-
-// export enum AnimalTypes{
-//     dog,
-//     cat,
-// }

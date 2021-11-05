@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { Col, Input, Row, Spin, Typography } from 'antd';
+import { Col, Row, Spin, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import User from '../User/User';
-import { fetchUsers, setCurrentPage } from '../../store/users/users.slice';
+import { fetchUsers } from '../../store/users/users.slice';
 import { fetchUsersRepos } from '../../store/usersRepos/usersRepos.slice';
 import {
-  selectUsers, selectUsersCurrentPage,
+  selectUsersCurrentPage,
   selectUsersData, selectUsersIsLoading, selectUsersTotalCount,
 } from '../../store/users/users.selector';
 import { UsersValue } from '../../types/Users.types';
 import { selectUsersRepoIsLoading, selectUsersRepositories } from '../../store/usersRepos/usersRepos.selector';
 import Pagination from '../pagination/Pagination';
 import './Users.scss';
-import githubServiceInstance from '../../service/github';
+import { clearRepositories } from '../../store/userRepo/userRepos.slice';
 
 const Users = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  // todo pagination
+
   const PER_PAGE = 3;
   const currentPage = useSelector(selectUsersCurrentPage);
   const totalCount = useSelector(selectUsersTotalCount);
   const pagesCount = Math.ceil(totalCount / PER_PAGE);
-  // console.log(pagesCount);
-  // const obj = useSelector(selectUsers);
-  // console.log('component obj', obj);
 
   const data = useSelector(selectUsersData);
   const usersIsLoading = useSelector(selectUsersIsLoading);
+
   const repositories = useSelector(selectUsersRepositories);
   const isLoading = useSelector(selectUsersRepoIsLoading);
 
@@ -41,11 +39,11 @@ const Users = () => {
     dispatch(fetchUsers({ userName, currentPage }));
   }, [userName, currentPage, dispatch]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(fetchUsersRepos(data));
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchUsersRepos(data));
+    }
+  }, [data, dispatch]);
   return (
     <div className="users">
       <div className="left-sidebar">
@@ -55,8 +53,8 @@ const Users = () => {
           </Typography.Title>
         </Typography>
         <input className="search-users-name" placeholder="Search for Users" onChange={handleUserNameChange} />
-        {usersIsLoading
-          ? (<Spin className="loader" size="large" spinning={usersIsLoading} />)
+        {isLoading
+          ? (<Spin className="loader" size="large" spinning={isLoading} />)
           : (
             <Row justify="space-between" className="block" align="top">
               <Col>
@@ -65,7 +63,12 @@ const Users = () => {
                   <Link to={`${match.url}${user.login}`} key={user.id}>
                     <div className="users-block">
                       <img className="img" src={user.avatar_url} alt="#" />
-                      <Typography.Paragraph className="users-name">
+                      <Typography.Paragraph
+                        className="users-name"
+                        onClick={() => {
+                          dispatch(clearRepositories());
+                        }}
+                      >
                         {user.login}
                       </Typography.Paragraph>
                     </div>

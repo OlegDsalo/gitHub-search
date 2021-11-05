@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserRepos } from '../../store/userRepo/userRepos.slice';
-import { UserReposValue } from '../../types/User.types';
+import {
+  fetchUserRepos, setRepoPage,
+} from '../../store/userRepo/userRepos.slice';
 import './UserRepos.scss';
-import { selectUserRepositories, selectUserRepositoriesIsLoading } from '../../store/userRepo/userRepo.selector';
-import Repositories from './Repositories';
+import {
+  selectUserRepositories,
+  selectUserRepositoriesIsLoading, selectUserReposRepoPage,
+  selectUserReposTotalCount,
+} from '../../store/userRepo/userRepo.selector';
 
 interface UserInfoProps {
   userName:string;
@@ -14,12 +18,15 @@ interface UserInfoProps {
 
 const UserRepos = ({ userName, inputValue }: UserInfoProps) => {
   const dispatch = useDispatch();
+
   const isLoading = useSelector(selectUserRepositoriesIsLoading);
   const repositories = useSelector(selectUserRepositories);
-  const [repoPage, setRepoPage] = useState<number>(1);
-  // const [repos, setRepos] = useState([]);
-  // todo state or action for clear array repositories
-  console.log('repositories', repositories);
+  const totalCount = useSelector(selectUserReposTotalCount);
+  const repoPage = useSelector(selectUserReposRepoPage);
+
+  const PER_PAGE = 10;
+  const pagesCount = Math.ceil(totalCount / PER_PAGE);
+
   useEffect(() => {
     dispatch(fetchUserRepos({
       userName,
@@ -28,26 +35,19 @@ const UserRepos = ({ userName, inputValue }: UserInfoProps) => {
     }));
   }, [userName, inputValue, repoPage, dispatch]);
 
-  const scrollHandler = useCallback((e) => {
-    console.log('isLoading', isLoading);
-    if (!isLoading) {
-      if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
-        setRepoPage(repoPage + 1);
-        console.log('scroll', repoPage);
+  const handleScroll = (event: any) => {
+    const { scrollHeight, scrollTop, clientHeight } = event.currentTarget;
+    if (isLoading === false) {
+      if (Math.ceil(scrollHeight - scrollTop) === clientHeight && repoPage < pagesCount) {
+        dispatch(setRepoPage(repoPage + 1));
       }
     }
-  }, [isLoading, repoPage]);
+  };
 
-  useEffect(() => {
-    document.addEventListener('scroll', scrollHandler);
-    return function () {
-      document.removeEventListener('scroll', scrollHandler);
-    };
-  }, [scrollHandler]);
   return (
-    <div className="user-repos">
-      {repositories.map((repo, index) => (
-        <div className="repos-item" key={repo.name}>
+    <div className="user-repos" onScroll={handleScroll}>
+      {repositories.map((repo) => (
+        <div className="repos-item" key={repo.full_name}>
           <p><a href={repo.html_url}>{repo.name}</a></p>
           <div>
             <p>{repo.forks}<img
@@ -63,7 +63,7 @@ const UserRepos = ({ userName, inputValue }: UserInfoProps) => {
           </div>
         </div>
       ))}
-      {/* <Spin className="loader" size="large" spinning={isLoading} /> */}
+      <Spin className="loader" size="large" spinning={isLoading} />
     </div>
   );
 };

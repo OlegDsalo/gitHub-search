@@ -1,7 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../store/users/users.slice';
-import { selectUsersCurrentPage } from '../../store/users/users.selector';
 import { createPages } from './createPages';
 import './pagination.scss';
 

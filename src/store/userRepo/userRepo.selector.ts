@@ -11,3 +11,13 @@ export const selectUserRepositoriesIsLoading = createSelector(
   selectUserRepos,
   (state) => state.isLoading,
 );
+
+export const selectUserReposTotalCount = createSelector(
+  selectUserRepos,
+  (state) => state.total_count,
+);
+
+export const selectUserReposRepoPage = createSelector(
+  selectUserRepos,
+  (state) => state.repoPage,
+);

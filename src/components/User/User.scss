@@ -4,15 +4,15 @@
   background: aquamarine;
   display: flex;
   flex-direction: column;
-
   left: 50%;
   position: relative;
+
   .search-repo {
     width: 100%;
   }
 
   .search-repos {
-    margin: 20px 10%;
+    margin: 0 10% 10px;
     width: 80%;
   }
 

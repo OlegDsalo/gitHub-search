@@ -1,11 +1,12 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchUser } from '../../store/user/user.slice';
-import { selectUser, selectUserData, selectUserIsLoading } from '../../store/user/user.selector';
+import { selectUserData, selectUserIsLoading } from '../../store/user/user.selector';
 import UserProfile from '../UserProfile/UserProfile';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
+import { setRepoPage } from '../../store/userRepo/userRepos.slice';
 
 interface ParamTypes {
     userName: string
@@ -20,15 +21,12 @@ const User = () => {
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
+    dispatch(setRepoPage(1));
   };
 
   useEffect(() => {
     dispatch(fetchUser(userName));
   }, [dispatch, userName]);
-
-  // useEffect(() => {
-  //   dispatch(fetchUserRepos({ userName, inputValue, currentPage }));
-  // }, [dispatch, userName, inputValue]);
 
   return (
     <div className="user">
