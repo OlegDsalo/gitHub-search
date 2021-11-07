@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import debounce from 'lodash.debounce';
 import { fetchUser } from '../../store/user/user.slice';
 import { selectUserData, selectUserIsLoading } from '../../store/user/user.selector';
 import UserProfile from '../UserProfile/UserProfile';
@@ -19,10 +20,16 @@ const User = () => {
   const { userName } = useParams<ParamTypes>();
   const [repoName, setRepoName] = useState<string>('');
 
-  const handleInputChange = (event) => {
+  const handleRepoNameChange = (event) => {
     setRepoName(event.target.value);
     dispatch(clearRepositories());
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedRepoNameChange = useCallback(
+    debounce(handleRepoNameChange, 500),
+    [repoName],
+  );
 
   useEffect(() => {
     dispatch(fetchUser(userName));
@@ -37,7 +44,7 @@ const User = () => {
       />
       <div className="search-repo">
         <h1 className="repos-title">Search by repo name</h1>
-        <input className="search-repos" onChange={handleInputChange} type="text" />
+        <input className="search-repos" onChange={debouncedRepoNameChange} type="text" />
         <UserRepos
           userName={userName}
           repoName={repoName}

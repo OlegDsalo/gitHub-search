@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Col, Row, Spin, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import debounce from 'lodash.debounce';
 import User from '../User/User';
 import { fetchUsers } from '../../store/users/users.slice';
 import { fetchUsersRepos } from '../../store/usersRepos/usersRepos.slice';
@@ -37,6 +38,11 @@ const Users = () => {
     setUserName(event.target.value);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedUserNameChange = useCallback(
+    debounce(handleUserNameChange, 500), [userName],
+  );
+
   useEffect(() => {
     dispatch(fetchUsers({ userName, currentPage }));
   }, [userName, currentPage, dispatch]);
@@ -52,7 +58,7 @@ const Users = () => {
         <Typography.Title>
           Github search Users
         </Typography.Title>
-        <input className="search-users-name" placeholder="Search for Users" onChange={handleUserNameChange} />
+        <input className="search-users-name" placeholder="Search for Users" onChange={debouncedUserNameChange} />
         {usersIsLoading
           ? (<Spin className="loader" size="large" spinning={usersIsLoading} />)
           : (
