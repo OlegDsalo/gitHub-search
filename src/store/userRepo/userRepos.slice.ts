@@ -32,7 +32,6 @@ export const userRepos = createSlice({
       state.isLoading = true;
     },
     [fetchUserRepos.fulfilled]: (state, action) => {
-      // state.repositories = state.repoPage === 1 ? [...action.payload.items] : [...state.repositories, ...action.payload.items];
       state.repositories = [...state.repositories, ...action.payload.items];
       state.isLoading = false;
       state.totalCount = action.payload.total_count;

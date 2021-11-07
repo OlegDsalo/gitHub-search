@@ -19,5 +19,5 @@ export const selectUsersCurrentPage = createSelector(
 
 export const selectUsersTotalCount = createSelector(
   selectUsers,
-  (state) => state.total_count,
+  (state) => state.totalCount,
 );
