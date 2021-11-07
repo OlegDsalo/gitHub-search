@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-export class GithubService {
-  private USER_PER_PAGE = '3';
+export const USERS_PER_PAGE = 3;
+export const REPOSITORIES_PER_PAGE = 10;
 
+export class GithubService {
   private headers = { Authorization: `token ${process.env.REACT_APP_ACCESS_TOKEN}` };
 
   private readonly baseUrl = 'https://api.github.com/';
@@ -12,7 +13,7 @@ export class GithubService {
       headers: this.headers,
       params: {
         q: params.userName || 'oleg',
-        per_page: this.USER_PER_PAGE,
+        per_page: USERS_PER_PAGE,
         page: params.currentPage,
       },
     });
@@ -34,10 +35,10 @@ export class GithubService {
   }
 
   async getUserRepos(params: any) {
-    return await axios.get(`${this.baseUrl}search/repositories?q=${params.inputValue} user:${params.userName} fork:true `, {
+    return await axios.get(`${this.baseUrl}search/repositories?q=${params.repoName} user:${params.userName} fork:true `, {
       headers: this.headers,
       params: {
-        per_page: 10,
+        per_page: REPOSITORIES_PER_PAGE,
         page: params.repoPage,
       },
     });

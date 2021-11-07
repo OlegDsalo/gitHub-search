@@ -14,7 +14,7 @@ export const selectUserRepositoriesIsLoading = createSelector(
 
 export const selectUserReposTotalCount = createSelector(
   selectUserRepos,
-  (state) => state.total_count,
+  (state) => state.totalCount,
 );
 
 export const selectUserReposRepoPage = createSelector(

@@ -14,15 +14,17 @@ import { selectUsersRepoIsLoading, selectUsersRepositories } from '../../store/u
 import Pagination from '../pagination/Pagination';
 import './Users.scss';
 import { clearRepositories } from '../../store/userRepo/userRepos.slice';
+import { USERS_PER_PAGE } from '../../service/github';
 
 const Users = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch();
 
-  const PER_PAGE = 3;
   const currentPage = useSelector(selectUsersCurrentPage);
-  const totalCount = useSelector(selectUsersTotalCount);
-  const pagesCount = Math.ceil(totalCount / PER_PAGE);
+  let totalCount = useSelector(selectUsersTotalCount);
+  totalCount = totalCount > 1000 ? 1000 : totalCount;
+
+  const pagesCount = Math.ceil(totalCount / USERS_PER_PAGE);
 
   const data = useSelector(selectUsersData);
   const usersIsLoading = useSelector(selectUsersIsLoading);
@@ -39,22 +41,20 @@ const Users = () => {
     dispatch(fetchUsers({ userName, currentPage }));
   }, [userName, currentPage, dispatch]);
 
-  useEffect(() => {
-    if (data) {
-      dispatch(fetchUsersRepos(data));
-    }
-  }, [data, dispatch]);
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch(fetchUsersRepos(data));
+  //   }
+  // }, [data, dispatch]);
   return (
     <div className="users">
       <div className="left-sidebar">
-        <Typography>
-          <Typography.Title>
-            Github search Users
-          </Typography.Title>
-        </Typography>
+        <Typography.Title>
+          Github search Users
+        </Typography.Title>
         <input className="search-users-name" placeholder="Search for Users" onChange={handleUserNameChange} />
-        {isLoading
-          ? (<Spin className="loader" size="large" spinning={isLoading} />)
+        {usersIsLoading
+          ? (<Spin className="loader" size="large" spinning={usersIsLoading} />)
           : (
             <Row justify="space-between" className="block" align="top">
               <Col>

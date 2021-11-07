@@ -6,7 +6,7 @@ import { selectUserData, selectUserIsLoading } from '../../store/user/user.selec
 import UserProfile from '../UserProfile/UserProfile';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
-import { setRepoPage } from '../../store/userRepo/userRepos.slice';
+import { clearRepositories, setRepoPage } from '../../store/userRepo/userRepos.slice';
 
 interface ParamTypes {
     userName: string
@@ -17,11 +17,11 @@ const User = () => {
   const userIsLoadingReq = useSelector(selectUserIsLoading);
   const dispatch = useDispatch();
   const { userName } = useParams<ParamTypes>();
-  const [inputValue, setInputValue] = useState<string>('');
+  const [repoName, setRepoName] = useState<string>('');
 
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-    dispatch(setRepoPage(1));
+    setRepoName(event.target.value);
+    dispatch(clearRepositories());
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const User = () => {
         <input className="search-repos" onChange={handleInputChange} type="text" />
         <UserRepos
           userName={userName}
-          inputValue={inputValue}
+          repoName={repoName}
         />
       </div>
     </div>

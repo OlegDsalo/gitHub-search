@@ -8,6 +8,7 @@
     width: 80%;
   }
 
+
   .left-sidebar {
     text-align: center;
     width: 50%;
@@ -15,13 +16,18 @@
     float: left;
   }
 
+
   .loader {
     width: 100%;
   }
 
-  .img {
-    width: 100px;
+  .users-block {
     height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px;
   }
 
   .repos-number {
@@ -29,13 +35,11 @@
     margin-bottom: 88px;
   }
 
-  .users-block {
-    width: 45%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 20px;
+
+  .img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
   }
 
   .repo-number {

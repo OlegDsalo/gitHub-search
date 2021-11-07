@@ -10,37 +10,36 @@ import {
   selectUserRepositoriesIsLoading, selectUserReposRepoPage,
   selectUserReposTotalCount,
 } from '../../store/userRepo/userRepo.selector';
+import { REPOSITORIES_PER_PAGE } from '../../service/github';
 
 interface UserInfoProps {
   userName:string;
-  inputValue:string;
+  repoName:string;
 }
 
-const UserRepos = ({ userName, inputValue }: UserInfoProps) => {
+const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(selectUserRepositoriesIsLoading);
   const repositories = useSelector(selectUserRepositories);
   const totalCount = useSelector(selectUserReposTotalCount);
   const repoPage = useSelector(selectUserReposRepoPage);
-
-  const PER_PAGE = 10;
-  const pagesCount = Math.ceil(totalCount / PER_PAGE);
+  const pagesCount = Math.ceil(totalCount / REPOSITORIES_PER_PAGE);
 
   useEffect(() => {
     dispatch(fetchUserRepos({
       userName,
-      inputValue,
+      repoName,
       repoPage,
     }));
-  }, [userName, inputValue, repoPage, dispatch]);
+  }, [userName, repoName, repoPage, dispatch]);
 
   const handleScroll = (event: any) => {
     const { scrollHeight, scrollTop, clientHeight } = event.currentTarget;
-    if (isLoading === false) {
-      if (Math.ceil(scrollHeight - scrollTop) === clientHeight && repoPage < pagesCount) {
-        dispatch(setRepoPage(repoPage + 1));
-      }
+    if (!isLoading && Math.floor(scrollHeight - scrollTop) < (clientHeight + (scrollHeight * 0.2)) && repoPage < pagesCount) {
+      event.currentTarget.scrollTop = (clientHeight
+        + (scrollHeight * (0.1 * repoPage)));
+      dispatch(setRepoPage(repoPage + 1));
     }
   };
 
