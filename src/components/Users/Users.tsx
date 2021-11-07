@@ -41,11 +41,11 @@ const Users = () => {
     dispatch(fetchUsers({ userName, currentPage }));
   }, [userName, currentPage, dispatch]);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(fetchUsersRepos(data));
-  //   }
-  // }, [data, dispatch]);
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchUsersRepos(data));
+    }
+  }, [data, dispatch]);
   return (
     <div className="users">
       <div className="left-sidebar">
