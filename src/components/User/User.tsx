@@ -34,6 +34,7 @@ const User = () => {
   useEffect(() => {
     dispatch(fetchUser(userName));
   }, [dispatch, userName]);
+
   return (
     <div className="user">
       <h1 className="user-title">User Profile</h1>
