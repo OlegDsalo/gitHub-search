@@ -1,0 +1,18 @@
+.user-repos {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 500px;
+  offset: 100%;
+  border: 1px solid black;
+
+  .repos-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    padding: 10px;
+
+  }
+}

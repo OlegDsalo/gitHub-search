@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .page, .current-page, .first-page, .last-page {
+    border: 1px solid red;
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .current-page {
+    color: deepskyblue;
+    font-weight: 700;
+    border: 2px solid orange;
+  }
+
+  .three-dot {
+    margin: 0 5px;
+  }
+
+}

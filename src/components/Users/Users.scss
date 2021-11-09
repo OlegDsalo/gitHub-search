@@ -1,0 +1,59 @@
+.users {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  .search-users-name {
+    text-align: center;
+    width: 80%;
+  }
+
+
+  .left-sidebar {
+    text-align: center;
+    width: 50%;
+    position: fixed;
+    float: left;
+  }
+
+
+  .loader {
+    width: 100%;
+  }
+
+  .users-block {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 20px;
+  }
+
+  .repos-number {
+    margin-top: 43px;
+    margin-bottom: 88px;
+  }
+
+
+  .img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .repo-number {
+    margin-right: 20px;
+    font-weight: bold;
+  }
+
+  .users-name {
+    padding-left: 30px;
+  }
+
+  .user-name {
+    margin-left: 20px;
+    font-size: 17px;
+    font-weight: bold;
+
+  }
+}
