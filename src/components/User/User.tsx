@@ -7,7 +7,7 @@ import { selectUserData, selectUserIsLoading } from '../../store/user/user.selec
 import UserProfile from '../UserProfile/UserProfile';
 import UserRepos from '../UserRepos/UserRepos';
 import './User.scss';
-import { clearRepositories, setRepoPage } from '../../store/userRepo/userRepos.slice';
+import { clearRepositories } from '../../store/userRepo/userRepos.slice';
 
 interface ParamTypes {
     userName: string
@@ -34,7 +34,6 @@ const User = () => {
   useEffect(() => {
     dispatch(fetchUser(userName));
   }, [dispatch, userName]);
-
   return (
     <div className="user">
       <h1 className="user-title">User Profile</h1>

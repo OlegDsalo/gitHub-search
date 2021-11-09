@@ -1,21 +1,13 @@
-.users {
-  display: flex;
-  flex-direction: row;
-  position: relative;
+.left-sidebar {
+  text-align: center;
+  width: 50%;
+  position: fixed;
+  float: left;
 
   .search-users-name {
     text-align: center;
     width: 80%;
   }
-
-
-  .left-sidebar {
-    text-align: center;
-    width: 50%;
-    position: fixed;
-    float: left;
-  }
-
 
   .loader {
     width: 100%;
@@ -26,12 +18,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 10px 20px;
   }
 
   .repos-number {
-    margin-top: 43px;
+    margin-top: 33px;
     margin-bottom: 88px;
+
   }
 
 
@@ -55,5 +47,11 @@
     font-size: 17px;
     font-weight: bold;
 
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .left-sidebar, .right-sidebar {
+    position: static;
   }
 }

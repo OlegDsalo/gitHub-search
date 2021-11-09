@@ -31,7 +31,6 @@ const Users = () => {
   const usersIsLoading = useSelector(selectUsersIsLoading);
 
   const repositories = useSelector(selectUsersRepositories);
-  const isLoading = useSelector(selectUsersRepoIsLoading);
 
   const [userName, setUserName] = useState<string>('');
   const handleUserNameChange = (event) => {
@@ -53,8 +52,8 @@ const Users = () => {
     }
   }, [data, dispatch]);
   return (
-    <div className="users">
-      <div className="left-sidebar">
+    <Row justify="space-around">
+      <Col className="left-sidebar" xs={23} sm={23} md={23} lg={11} xl={11} xxl={11}>
         <Typography.Title>
           Github search Users
         </Typography.Title>
@@ -62,7 +61,7 @@ const Users = () => {
         {usersIsLoading
           ? (<Spin className="loader" size="large" spinning={usersIsLoading} />)
           : (
-            <Row justify="space-between" className="block" align="top">
+            <Row justify="space-between" align="top">
               <Col>
                 {
                 data.map((user: UsersValue) => (
@@ -91,16 +90,16 @@ const Users = () => {
               </Col>
             </Row>
           )}
-        <div>
-          <Pagination currentPage={currentPage} pagesCount={pagesCount} />
-        </div>
-      </div>
-      <Switch>
-        <Route path="/:userName">
-          <User />
-        </Route>
-      </Switch>
-    </div>
+        <Pagination currentPage={currentPage} pagesCount={pagesCount} />
+      </Col>
+      <Col className="right-side" xs={23} sm={23} md={23} lg={11} xl={11} xxl={11}>
+        <Switch>
+          <Route path="/:userName">
+            <User />
+          </Route>
+        </Switch>
+      </Col>
+    </Row>
   );
 };
 
