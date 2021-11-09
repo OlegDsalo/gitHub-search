@@ -11,11 +11,11 @@ import {
   selectUsersData, selectUsersIsLoading, selectUsersTotalCount,
 } from '../../store/users/users.selector';
 import { UsersValue } from '../../types/Users.types';
-import { selectUsersRepoIsLoading, selectUsersRepositories } from '../../store/usersRepos/usersRepos.selector';
+import { selectUsersRepositories } from '../../store/usersRepos/usersRepos.selector';
 import Pagination from '../pagination/Pagination';
-import './Users.scss';
 import { clearRepositories } from '../../store/userRepo/userRepos.slice';
 import { USERS_PER_PAGE } from '../../service/github';
+import './Users.scss';
 
 const Users = () => {
   const dispatch = useDispatch();
