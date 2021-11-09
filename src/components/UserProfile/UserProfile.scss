@@ -1,0 +1,29 @@
+.user-profile {
+  display: flex;
+  flex-direction: row;
+
+  .loader {
+    width: 100%;
+  }
+
+  .user-bio {
+    white-space: normal;
+  }
+
+  .user-info {
+    list-style: none;
+    line-height: 2.5;
+    min-width: 500px;
+  }
+
+  .user-description {
+    display: flex;
+    flex-direction: row
+  }
+
+  .user-avatar {
+    margin: 0 20px 0 20px;
+    width: 250px;
+    height: 250px;
+  }
+}
