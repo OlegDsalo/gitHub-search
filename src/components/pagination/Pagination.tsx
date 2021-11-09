@@ -35,7 +35,7 @@ const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
           {page}
         </span>
       ))}
-      {currentPage === pagesCount || currentPage + 3 === pagesCount ? null
+      {currentPage === pagesCount || currentPage + 3 >= pagesCount ? null
         : (
           <>
             <span className="three-dot">&hellip;</span>
