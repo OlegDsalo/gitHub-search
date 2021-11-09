@@ -7,7 +7,8 @@
   }
 
   .user-bio {
-    white-space: normal;
+    width: 30rem;
+    word-wrap: break-word;
   }
 
   .user-info {
@@ -30,6 +31,9 @@
 
 @media screen and (max-width: 900px) {
   .user-profile {
+    .user-bio {
+      width: 20rem;
+    }
     .user-description {
       flex-direction: column;
     }

@@ -92,7 +92,7 @@ const Users = () => {
           )}
         <Pagination currentPage={currentPage} pagesCount={pagesCount} />
       </Col>
-      <Col className="right-side" xs={23} sm={23} md={23} lg={11} xl={11} xxl={11}>
+      <Col className="right-side" xs={24} sm={24} md={23} lg={11} xl={11} xxl={11}>
         <Switch>
           <Route path="/:userName">
             <User />
