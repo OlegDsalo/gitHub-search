@@ -25,7 +25,7 @@ const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
           </span>
           <span className="three-dot">&hellip;</span>
         </>
-      ) : (<></>)}
+      ) : null}
       {pages.map((page) => (
         <span
           className={currentPage === page ? 'current-page' : 'page'}
@@ -35,7 +35,7 @@ const Pagination = ({ currentPage, pagesCount }:PaginationProps) => {
           {page}
         </span>
       ))}
-      {currentPage === pagesCount || currentPage + 3 === pagesCount ? (<></>)
+      {currentPage === pagesCount || currentPage + 3 === pagesCount ? null
         : (
           <>
             <span className="three-dot">&hellip;</span>
