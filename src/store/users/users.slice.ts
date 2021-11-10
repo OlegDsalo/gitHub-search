@@ -13,7 +13,7 @@ export const users = createSlice({
   name: 'users',
   initialState: {
     data: [],
-    isLoading: true,
+    isLoading: false,
     currentPage: 1,
     totalCount: 0,
   },

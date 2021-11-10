@@ -19,11 +19,12 @@ export const userRepos = createSlice({
   },
   reducers: {
     setRepoPage(state, action) {
+      state.isLoading = true;
       state.repoPage = action.payload;
     },
     clearRepositories(state) {
-      state.repoPage = 1;
       state.repositories = [];
+      state.repoPage = 1;
       state.isLoading = true;
     },
   },

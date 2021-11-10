@@ -17,6 +17,14 @@ interface UserInfoProps {
   repoName:string;
 }
 
+export interface UserRepov {
+  full_name: string,
+  name: string,
+  forks: number,
+  stargazers_count: number,
+  html_url: string
+}
+
 const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   const dispatch = useDispatch();
 
@@ -25,7 +33,7 @@ const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   const totalCount = useSelector(selectUserReposTotalCount);
   const repoPage = useSelector(selectUserReposRepoPage);
   const pagesCount = Math.ceil(totalCount / REPOSITORIES_PER_PAGE);
-
+  console.log(repositories);
   useEffect(() => {
     dispatch(fetchUserRepos({
       userName,
@@ -35,17 +43,20 @@ const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   }, [userName, repoName, repoPage, dispatch]);
 
   const handleScroll = (event: any) => {
+    console.log(isLoading);
     const { scrollHeight, scrollTop, clientHeight } = event.currentTarget;
-    if (!isLoading && Math.floor(scrollHeight - scrollTop) < (clientHeight + (scrollHeight * 0.2)) && repoPage < pagesCount) {
-      event.currentTarget.scrollTop = (clientHeight
-        + (scrollHeight * (0.1 * repoPage)));
-      dispatch(setRepoPage(repoPage + 1));
+    const isLastPage = repoPage < pagesCount;
+    const needLoadMore = clientHeight + scrollHeight * 0.2 > Math.floor(scrollHeight - scrollTop);
+    if (!isLoading) {
+      if (needLoadMore && isLastPage) {
+        dispatch(setRepoPage(repoPage + 1));
+      }
     }
   };
 
   return (
     <div className="user-repos" onScroll={handleScroll}>
-      {repositories.map((repo) => (
+      {repositories.map((repo:UserRepov) => (
         <div className="repos-item" key={repo.full_name}>
           <p><a href={repo.html_url}>{repo.name}</a></p>
           <div>
