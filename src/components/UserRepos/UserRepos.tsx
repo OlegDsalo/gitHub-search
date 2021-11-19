@@ -17,7 +17,7 @@ interface UserInfoProps {
   repoName:string;
 }
 
-export interface UserRepov {
+interface UserRepos {
   full_name: string,
   name: string,
   forks: number,
@@ -33,7 +33,7 @@ const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   const totalCount = useSelector(selectUserReposTotalCount);
   const repoPage = useSelector(selectUserReposRepoPage);
   const pagesCount = Math.ceil(totalCount / REPOSITORIES_PER_PAGE);
-  console.log(repositories);
+
   useEffect(() => {
     dispatch(fetchUserRepos({
       userName,
@@ -56,7 +56,7 @@ const UserRepos = ({ userName, repoName }: UserInfoProps) => {
 
   return (
     <div className="user-repos" onScroll={handleScroll}>
-      {repositories.map((repo:UserRepov) => (
+      {repositories.map((repo:UserRepos) => (
         <div className="repos-item" key={repo.full_name}>
           <p><a href={repo.html_url}>{repo.name}</a></p>
           <div>
