@@ -43,7 +43,6 @@ const UserRepos = ({ userName, repoName }: UserInfoProps) => {
   }, [userName, repoName, repoPage, dispatch]);
 
   const handleScroll = (event: any) => {
-    console.log(isLoading);
     const { scrollHeight, scrollTop, clientHeight } = event.currentTarget;
     const isLastPage = repoPage < pagesCount;
     const needLoadMore = clientHeight + scrollHeight * 0.2 > Math.floor(scrollHeight - scrollTop);
